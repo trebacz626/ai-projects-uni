@@ -1,0 +1,7 @@
+
+find /home/ -type f -name "*.txt" -exec grep -q "abc" "{}" \; -print -delete
+
+ls -a  -S /usr/bin | head -n 3 |sort
+
+
+

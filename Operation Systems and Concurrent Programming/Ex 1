@@ -1,0 +1,34 @@
+locate -r /print$
+
+
+locate -r '^/usr/[^/]*bin[^/]*/$'
+
+
+
+
+TASK 1
+1. locate -r '^/usr/.*/[A-Z][0-9][0-9][^/]*$'
+find /usr -type f -name '[A-Z][0-9][0-9]*'
+if only 3 characters
+
+locate -r '^/usr/.*/[A-Z][0-9][0-9]\..$'
+find /usr -name '[A-Z][0-9][0-9].*'
+
+TASK 2.
+find /* -atime +365 -size +40k -exec ln -s {} \;
+
+TASK 3
+.
+1 process was trying to execute in parallel
+
+
+
+TASK 1 without regular expressions
+
+locate '/usr/*/[A-Z][0-9][0-9].*'
+find /usr -name '[A-Z][0-9][0-9].*'
+find /usr -name '[A-Z][0-9][0-9].*' -o -name "[A-Z][0-9][0-9]"
+
+
+additional question:
+load would be 4
