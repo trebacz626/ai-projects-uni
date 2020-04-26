@@ -1,0 +1,13 @@
+gs://big_data626/labs/hadoop/mapreduce/station.csv
+
+http://www.cs.put.poznan.pl/kjankiewicz/bigdata/cycle-share-dataset.zip
+
+gcloud beta dataproc clusters create big-data626 \
+--enable-component-gateway --bucket big_data626 \
+--region europe-west3 --subnet default --zone europe-west3-c \
+--master-machine-type n1-standard-2 --master-boot-disk-size 50 \
+--num-workers 2 \
+--worker-machine-type n1-standard-2 --worker-boot-disk-size 50 \
+--image-version 1.3-deb9 \
+--optional-components ANACONDA,JUPYTER,ZEPPELIN \
+--project big-data-272419 --max-age=2h
