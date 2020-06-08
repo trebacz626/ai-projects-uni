@@ -6,18 +6,43 @@ extern scanf
 
 section .data
     welcome_msg      db 'Provide a max value',10,0
-    scanf_format     db '%f', 0
-    out_format       db 'sqrt(%f) num: %f', 10, 0
+    scanf_format     db '%lf', 0
+    out_format       db 'sqrt(%lf) num: %lf', 10, 0
     step             dq 0.125
+    cur_number       dq 0
 
 section .bss
-    max_number       resd 1
-    root             resd 1
-    tmp              resq 1
+    max_number       resq 1
 
 section .text
 
+    finish:
+        ret
     for_loop:
+        fld qword[cur_number]
+        fld qword[max_number]
+        fcomp
+        fstsw ax
+        and eax, 0100011100000000B
+        cmp eax, 0000000100000000B
+        je finish
+
+        fld qword[cur_number]
+        sub     esp,8
+        fst qword[esp]
+        fsqrt
+        sub     esp, 8
+        fstp qword[esp]
+        push    out_format
+        call    printf
+        add     esp, 20
+        sub     eax, eax
+        fld qword[cur_number]
+        fadd qword[step]
+        fstp qword[cur_number]
+        jmp for_loop
+
+        
     main:
         ;print welcome message
         push    welcome_msg
@@ -29,17 +54,4 @@ section .text
         call    scanf 
         add     esp, 8
         ;print word
-        fld     qword[max_number]
-        fst    qword[tmp]
-        push dword[tmp+4]
-        push dword[tmp]
-        fld qword[max_number]
-        fsqrt
-        fst qword[tmp]
-        push dword[tmp+4]
-        push dword[tmp]
-        push    out_format
-        call    printf
-        add     esp, 20
-        sub     eax, eax
-        ret
+        jmp for_loop
