@@ -26,6 +26,8 @@ section .text
         and eax, 0100011100000000B
         cmp eax, 0000000100000000B
         je finish
+        cmp eax, 0100000000000000B
+        je finish
 
         fld qword[cur_number]
         sub     esp,8
