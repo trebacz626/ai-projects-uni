@@ -6,12 +6,14 @@ extern scanf
 
 section .data
     welcome_msg      db 'Provide a max value',10,0
-    scanf_format     db '%lf', 0
+    scanf_format     db '%f', 0
     out_format       db 'sqrt(%f) num: %f', 10, 0
+    step             dq 0.125
 
 section .bss
-    max_number       resq 1
-    root             resq 1
+    max_number       resd 1
+    root             resd 1
+    tmp              resq 1
 
 section .text
 
@@ -27,13 +29,15 @@ section .text
         call    scanf 
         add     esp, 8
         ;print word
-        push dword[max_number+4]
-        push dword[max_number]
+        fld     qword[max_number]
+        fst    qword[tmp]
+        push dword[tmp+4]
+        push dword[tmp]
         fld qword[max_number]
         fsqrt
-        fstp qword[root]
-        push dword[root+4]
-        push dword[root]
+        fst qword[tmp]
+        push dword[tmp+4]
+        push dword[tmp]
         push    out_format
         call    printf
         add     esp, 20
