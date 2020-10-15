@@ -1,0 +1,115 @@
+1
+SELECT * FROM JOBS
+2
+SELECT * FROM EMPLOYEES
+3
+SELECT surname, job, 12*salary FROM EMPLOYEES
+4
+SELECT surname, job, 12*salary AS yearly_income FROM EMPLOYEES
+5
+SELECT
+    NAME + SURNAME,
+    JOB,
+    SALARY + NVL(
+        ADD_SALARY, 0
+    ) AS MOTHLY_INCOME
+FROM
+    EMPLOYEES
+ORDER BY
+    MOTHLY_INCOME
+6
+SELECT
+    CONCAT(NAME,CONCAT(' ',SURNAME)) as assistants
+FROM
+    EMPLOYEES
+WHERE 
+JOB = 'ASSISTANT'
+7
+SELECT
+    CONCAT(NAME,CONCAT(' ',SURNAME)) as employee,
+job,
+salary,
+dept_id
+FROM
+    EMPLOYEES
+WHERE 
+dept_id IN (30,40)
+ORDER BY
+salary DESC
+8
+SELECT
+    CONCAT(NAME,CONCAT(' ',SURNAME)) as employee,
+job,
+salary
+FROM
+    EMPLOYEES
+WHERE 
+salary BETWEEN 1000 AND 2000
+ORDER BY
+salary
+9
+SELECT
+    SURNAME
+FROM
+    EMPLOYEES
+WHERE 
+SURNAME LIKE '%son'
+10
+SELECT
+    NAME,
+    SURNAME
+FROM
+    EMPLOYEES
+WHERE
+    DEPT_ID IS NULL
+11
+SELECT
+    NAME,
+    SURNAME,
+    BOSS_ID,
+    SALARY
+FROM
+    EMPLOYEES
+WHERE
+    BOSS_ID IS NOT NULL
+    AND SALARY > 2000
+12
+SELECT
+    NAME,
+    SURNAME,
+    DEPT_ID
+FROM
+    EMPLOYEES
+WHERE
+    DEPT_ID = 20
+    AND (SURNAME LIKE 'W%' OR SURNAME LIKE '%son')
+13
+SELECT
+    NAME,
+    SURNAME,
+    SALARY + NVL(
+        ADD_SALARY, 0
+    ) AS MONTHLY_SALARY
+FROM
+    EMPLOYEES
+WHERE
+    SALARY + NVL(
+        ADD_SALARY, 0
+    ) > 4000
+14
+SELECT
+    'Employee '
+    || NAME
+    || ' '
+    || SURNAME
+    || ' works as '
+    || JOB
+    || ' and earns '
+    || (SALARY + NVL(
+        ADD_SALARY, 0
+    )) AS employees
+FROM
+    EMPLOYEES
+ORDER BY
+    SURNAME,
+    NAME
