@@ -11,8 +11,8 @@ public:
     ~Cabinet();
     std::string printAllItems();
     int getNumberOfItems();
-    void addItem(T* item);
-    T* getAndRemoveItem(int index);
+    void operator+=(T* item);
+    T* operator-=(int index);
 };
 
 

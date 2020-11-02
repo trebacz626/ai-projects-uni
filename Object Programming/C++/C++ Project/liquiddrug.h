@@ -1,5 +1,6 @@
-#ifndef __PILLDRUG_H__
-#define __PILLDRUG_H__
+#ifndef __LIQUIDDRUG_H__
+#define __LIQUIDDRUG_H__
+
 
 #include "doseddrug.h"
 #include <string>
@@ -13,4 +14,5 @@ public:
   virtual std::string toString();
   std::string getDoseUnit();
 };
-#endif // __PILLDRUG_H__
+
+#endif // __LIQUIDDRUG_H__

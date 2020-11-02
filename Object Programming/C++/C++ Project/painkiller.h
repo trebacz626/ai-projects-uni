@@ -1,5 +1,6 @@
-#ifndef __CVITAMINPILL_H__
-#define __CVITAMINPILL_H__
+#ifndef __PAINKILLER_H__
+#define __PAINKILLER_H__
+
 
 
 #include "pilldrug.h"
@@ -14,4 +15,5 @@ public:
   virtual std::string toString();
   virtual std::string getAdditionalInformation(){return "";};
 };
-#endif // __CVITAMINPILL_H__
+
+#endif // __PAINKILLER_H__

@@ -1,5 +1,5 @@
-#ifndef __CVITAMINPILL_H__
-#define __CVITAMINPILL_H__
+#ifndef __GEL_H__
+#define __GEL_H__
 
 
 #include "liquiddrug.h"
@@ -14,4 +14,5 @@ public:
   virtual std::string toString();
   virtual std::string getAdditionalInformation(){return "";};
 };
-#endif // __CVITAMINPILL_H__
+
+#endif // __GEL_H__
