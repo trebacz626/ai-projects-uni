@@ -1,37 +1,13 @@
 #include <iostream>
 #include <string>
-using namespace std;
+#include <time.h>
 
-class Drug {
-  string name;
-  float price;
-public:
-    Drug(string name, float price): name(name),price(price){}
-    virtual string toString(){} 
-};
-
-class PrescriptedDrug{
-  int maximumAmount;
-};
-
-class RefundedDrug{
-  float refundPercentage;
-};
-
-class DosedDrug{
-  float standardDose;
-};
-
-class LiquidDrug{
-  float volume;
-};
-
-class PillDrug{
-  int numberOfPills;
-};
-
+#include "program.h"
 
 
 int main(){
-  return 0;
+  srand (time(NULL));
+  Program* program = new Program();
+  program->run();
+  delete program;
 }
