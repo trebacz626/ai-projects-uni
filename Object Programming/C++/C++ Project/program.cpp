@@ -45,7 +45,7 @@ void Program::run() {
       drug = new BandAid(name, price, rand() % 2 == 1);
       break;
     }
-    cabinet+=drug;
+    cabinet += drug;
   }
   while (cabinet.getNumberOfItems() > 0) {
     std::cout << "==============================================" << std::endl;
@@ -56,15 +56,17 @@ void Program::run() {
 }
 
 void Program::pandemic() {
-  float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-  if (r <= this->pDisease) {
-    Drug *drug = cabinet-=rand() % cabinet.getNumberOfItems();
-    // std::cout<<drug->toString();
-    float r2 = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-    if (r2 <= this->pRecovery) {
-      cabinet+=drug;
-    } else {
-      delete drug;
+
+  for (int i = cabinet.getNumberOfItems()-1; i >= 0; i--) {
+    float r = randomFloat(0, 1);
+    if (r <= this->pDisease) {
+      Drug *drug = cabinet -= i;
+      float r2 = randomFloat(0, 1);
+      if (r2 <= this->pRecovery) {
+        cabinet += drug;
+      } else {
+        delete drug;
+      }
     }
   }
 }
