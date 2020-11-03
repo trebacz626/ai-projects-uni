@@ -1,3 +1,6 @@
+#ifndef __PROGRAM_H__
+#define __PROGRAM_H__
+
 #include "cabinet.h"
 
 class Program {
@@ -7,7 +10,6 @@ class Program {
   void pandemic();
 
 public:
-  // void setPDisease(float pDisease) { this->pDisease = pDisease; };
-  // void setPRecovery(float pRecovery) { this->pRecovery = pRecovery; };
   void run();
 };
+#endif // __PROGRAM_H__
