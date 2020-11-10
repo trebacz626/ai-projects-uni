@@ -1,6 +1,5 @@
 library(scales)
 set.seed(145455)
-
 basicStats = function(r){
   print("Mean")
   print(mean(r1))
@@ -45,7 +44,6 @@ m1
 
 #Task 4
 data = read.csv("./flights.csv", sep=";")
-data
 
 class(data)
 
@@ -68,8 +66,25 @@ for(column in 1:6){
 boxplot(data)
 
 
-data2 =read.csv("notes.csv", sep=";", dec = ',')
+data2 =read.csv("strawberries.csv", sep=";", dec = ',')
 data2
+summary(data2)
+for (column in 1:2){
+  print(paste("Column:::::::::::::::::", names(data2[column])))
+  basicStats(na.omit(data2[,column]))
+}
 
-mean(na.omit(data2[,1]))
-summary(na.omit(data2))
+par(mfrow = c(1,2))
+for(column in 1:2){
+  hist(data2[,column], xlim = c(0,150), xlab="Crops", breaks = seq(0,150,length=7), main=paste("Year",names(data2[column])), col=column+1, freq = FALSE)
+}
+library(arm)
+
+notes = read.csv("notes.csv", sep=";",head=TRUE, dec=",")
+notes[,1]
+
+par(mfrow=(c(2,2)))
+for(i in 1:4){
+  interval=seq(1,5,length=1)
+  discrete.hist(notes[,i],main=paste("histogram of",names(notes)[i]))
+}
