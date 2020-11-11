@@ -60,7 +60,8 @@ void Program::pandemic() {
   for (int i = cabinet.getNumberOfItems()-1; i >= 0; i--) {
     float r = randomFloat(0, 1);
     if (r <= this->pDisease) {
-      Drug *drug = cabinet -= i;
+      Drug *drug = cabinet.getFirstItem();
+      cabinet -= drug;
       float r2 = randomFloat(0, 1);
       if (r2 <= this->pRecovery) {
         cabinet += drug;
