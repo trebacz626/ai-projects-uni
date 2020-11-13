@@ -11,14 +11,15 @@
 
 void Program::run() {
   int initialNumberOfItems;
+  std::cout << "What is the number of drugs?" << std::endl;
   std::cin >> initialNumberOfItems;
+  std::cout << "What is pDisease?" << std::endl;
   std::cin >> this->pDisease;
+  std::cout << "What is pRecovery?" << std::endl;
   std::cin >> this->pRecovery;
-  // this->pDisease = 0.9;
-  // this->pRecovery = 0.2;
-  const std::string randomNames[] = {"A", "B", "C", "D", "E", "F", "G",
-                                     "H", "I", "J", "K", "L", "M", "N",
-                                     "O", "P", "Q", "R", "S"};
+  const std::string randomNames[] = {"Appape", "Bitunoscorbiin", "Cetylin", "Derilur", "Enitum", "Feganum", "Gilotinum",
+                                     "Haerbapolis", "Indekto", "Jelico", "Kolerino", "Lestittto", "Martwito", "Nowiitto",
+                                     "Osper magus", "Piernikum", "Quritin", "Relodin", "Spacjyn"};
   for (int i = 0; i < initialNumberOfItems; i++) {
     Drug *drug;
     std::string name = randomNames[rand() % 19];
@@ -34,11 +35,11 @@ void Program::run() {
                      randomFloat(0, 1));
       break;
     case 2:
-      drug = new PainKiller(name, price, randomFloat(1, 10), rand() % 100 + 5,
+      drug = new PainKiller(name, price, rand() % 10 +1, rand() % 100 + 5,
                             randomFloat(0, 100));
       break;
     case 3:
-      drug = new CVitaminPill(name, price, randomFloat(1, 10), rand() % 100 + 5,
+      drug = new CVitaminPill(name, price, rand() % 10 +1, rand() % 100 + 5,
                               rand() % 2 == 1);
       break;
     case 4:
