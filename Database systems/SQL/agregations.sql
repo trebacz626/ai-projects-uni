@@ -135,22 +135,22 @@ WHERE
     OR SURNAME LIKE '%e%'
 13.
 SELECT
-    SUM(
+    COUNT(
         CASE
         WHEN SURNAME LIKE '%A%'
              OR SURNAME LIKE '%a%' THEN
         1
         ELSE
-        0
+        NULL
         END
     )  AS COUNT_A,
-    SUM(
+    COUNT(
         CASE
         WHEN SURNAME LIKE '%E%'
              OR SURNAME LIKE '%e%' THEN
         1
         ELSE
-        0
+        NULL
         END
     )  AS COUNT_E
 FROM
