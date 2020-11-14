@@ -109,9 +109,11 @@ task8 = function(){
   for(i in 0:n){
     v=c(v,dbinom(i,n,p))
   }
-  table = data.frame(c(0:3),v)
+  table = data.frame(c(0:3),c(16*15*14/20/19/18, 16*15*4/20/19/18*3, 16*4*3/20/19/18*3,4*3*2/20/19/18))
+  print(table)
   eX = sum(table[,1]*table[,2])
-  #C = E(3Y^2 + Y)
-  print(3*sum(table[,1]^2*table[,2]) + eX)
+  eX2 = sum(table[,1]^2*table[,2])
+  #C = E(3X^2 + X)
+  print(3*eX2 + eX)
 }
 task8()
