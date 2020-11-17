@@ -1,0 +1,77 @@
+---
+title: "RLab 4"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+# Task 1
+a)
+```{r}
+set.seed(143)
+library(arm)
+n=10
+p =0.1
+k=3
+pbinom(k,n,p)
+```
+b)
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+```{r}
+EX = n*p
+SDX = sqrt(n*p*(1-p))
+pnorm(k, EX, SDX)
+```
+c)
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+```{r}
+pnorm(k,EX,SDX) - pnorm(k, EX, SDX)
+```
+d)
+```{r}
+for( i in c(20,30,40,100)){
+  pb = pbinom(k,i,p)
+  pn = pnorm(k,i*p,sqrt(i*p*(1-p)))
+  print(abs(pb-pn))
+}
+```
+```{r}
+for( p2 in c(0.05,0.1,0.3,0.5)){
+  pb = pbinom(k,n,p2)
+  pn = pnorm(k,n*p2,sqrt(n*p2*(1-p2)))
+  print(abs(pb-pn))
+}
+n = 100
+print("######################")
+for( p2 in c(0.05,0.1,0.3,0.5)){
+  pb = pbinom(k,n,p2)
+  pn = pnorm(k,n*p2,sqrt(n*p2*(1-p2)))
+  print(abs(pb-pn))
+}
+```
+```{r}
+p = 0.2
+samples = 500
+par(mfrow = (c(3,1)))
+for( n in c(20,200,2000)){
+  discrete.hist(rbinom(samples,n, p), xlim=c(0,n))
+  x = 0:n
+  plot(x,dbinom(x,n,p), type="h", col = "red", xlim=c(0,n))
+  plot(x,dpois(x,n*p), type = "h",col = "green", xlim=c(0,n))
+}
+```
+```{r}
+p = 0.2
+samples = 500
+par(mfrow = (c(1,1)))
+for( n in c(10,20,200,2000)){
+  nums = rbinom(samples,n, p)
+  x = 0:n
+  curve(dnorm(x, n*p, sqrt(n*p*(1-p))), type="l", col="black", xlim=c(0,n))
+  hist(nums, xlim=c(0,n), add=TRUE, freq=FALSE)
+  lines(density(nums), col="red")
+}
+```
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
