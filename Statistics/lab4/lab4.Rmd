@@ -73,5 +73,106 @@ for( n in c(10,20,200,2000)){
   lines(density(nums), col="red")
 }
 ```
+# Task 3
+```{r}
+curve(dexp(x, rate = 0.01))
+#a P(X>=200)
+1 - pexp(200, rate = 0.01)
+#b P(X<=100)
+pexp(100, rate=0.01)
+#c P(x<=500)
+pexp(500, rate - 0.01)
+```
+# Task 4
+```{r}
+mi = 2.4
+lambda = 1/mi
+#a
+1 - pexp(3,lambda)
+#b
+pexp(3,lambda)- pexp(2,lambda)
+
+f = function(x){
+  dexp(x, lambda)
+}
+
+fe = function(x){
+  x* dexp(x, lambda)
+}
+
+integrate(f,2,3)
+integrate(fe, -Inf, Inf)
+```
+# Task 5
+```{r}
+#m =0.13
+#sd =...
+```
+
+
+
+# Task 6
+```{r}
+m = 120
+sd = 15
+pnorm(135, m, sd) - pnorm(100, m, sd)
+
+m2 = 2
+sd2 = 1/4
+pnorm(2.25, m2,sd2) - pnorm(1+5/6, m2, sd2)
+```
+# Task 7
+```{r}
+m=200
+sd = 20
+res = 1-pnorm(157, m, sd)
+```
+
+# Task 9
+```{r}
+samples = rnorm(30)
+mean = sum(samples)/30
+
+means = c()
+for( i in 1:10000){
+  sample = rnorm(30)
+  mean = sum(sample) / 30
+  means = c(means,mean)
+}
+std = 1/sqrt(30)
+hist(means, freq = FALSE, xlim = c(-5*std,5*std))
+curve(dnorm(x, 0, std), add = TRUE,  xlim = c(-5*std,5*std))
+```
+# Task 10
+```{r}
+lambda = 4
+n = 1000
+trials = 3500
+means = c()
+for( i in 1:trials){
+  sample = rpois(n, lambda)
+  mean = sum(sample) / n
+  means = c(means,mean)
+}
+std =sqrt(lambda/n)
+hist(means, freq = FALSE, xlim = c(lambda -3*std,lambda +3*std))
+curve(dnorm(x, lambda, std), add = TRUE,  xlim = c(lambda -3*std,lambda +3*std))
+lines(density(means),  col="red")
+```
+# Task 11 
+```{r}
+sample = 25
+mean = 200
+std = 10
+#avg had approx normal dist 
+#a
+pnorm(202, mean, sd/sqrt(n)) - pnorm(9999999, mean, sd/sqrt(n))
+#b Y  =E Xi
+mean = mean*n
+print(pnorm(5100, mean, sd*sqrt(n)))
+
+
+```
+
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
