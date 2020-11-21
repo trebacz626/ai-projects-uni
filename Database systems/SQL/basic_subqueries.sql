@@ -119,4 +119,67 @@ HAVING
         GROUP BY
             DEPARTMENTS.DEPT_NAME
     )
-
+8.
+SELECT
+    EXTRACT(YEAR FROM HIRE_DATE)     AS HIRE_YEAR,
+    COUNT(EMP_ID)                    AS EMP_COUNT
+FROM
+    EMPLOYEES
+WHERE
+    JOB LIKE 'PROFESSOR'
+GROUP BY
+    EXTRACT(YEAR FROM HIRE_DATE)
+HAVING
+    COUNT(EMP_ID) = (
+        SELECT
+            MAX(EMP_COUNT)
+        FROM
+            (
+                SELECT
+                    COUNT(E.EMP_ID) AS EMP_COUNT
+                FROM
+                    EMPLOYEES E
+                WHERE
+                    E.JOB LIKE 'PROFESSOR'
+                GROUP BY
+                    EXTRACT(YEAR FROM E.HIRE_DATE)
+                ORDER BY
+                    COUNT(E.EMP_ID) DESC
+            )
+    )
+9.
+SELECT
+    D.DEPT_NAME,
+    SUM(E.SALARY) + SUM(NVL(
+        E.ADD_SALARY, 0
+    )) AS SALARY_SUM
+FROM
+    DEPARTMENTS D
+    INNER JOIN EMPLOYEES E ON D.DEPT_ID = E.DEPT_ID
+GROUP BY
+    D.DEPT_NAME
+HAVING
+    SUM(E.SALARY) + SUM(NVL(
+        E.ADD_SALARY, 0
+    )) = (
+        SELECT
+            MAX(SUM(EIN.SALARY) + SUM(NVL(
+                EIN.ADD_SALARY, 0
+            )))
+        FROM
+            DEPARTMENTS DIN
+            INNER JOIN EMPLOYEES EIN ON DIN.DEPT_ID = EIN.DEPT_ID
+        GROUP BY
+            DIN.DEPT_ID
+    )
+--Just max
+( SELECT
+    MAX(SUM(E.SALARY) + SUM(NVL(
+        E.ADD_SALARY, 0
+    )))
+FROM
+    DEPARTMENTS D
+    INNER JOIN EMPLOYEES E ON D.DEPT_ID = E.DEPT_ID
+GROUP BY
+    D.DEPT_ID
+)
