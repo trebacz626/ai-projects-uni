@@ -1,0 +1,194 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+data = read.csv('data_est.csv', sep =';')
+data
+```
+Ex1 - Case 3
+```{r}
+diamonds = na.omit(data$diamonds)
+#a)
+#population - all diamonds produced by factory
+#sample - 12 diamonds selected
+#measurement - weight
+#b)
+n = length(diamonds)
+M = mean(diamonds)
+S2 = var(diamonds)
+S = sd(diamonds)
+print(c("mean", "variance", "std"))
+print(c(M,S2,S))
+alpha = 0.05
+
+conf_int = function(M,S,n, alpha){
+  c(M-qt(1-alpha/2, n-1)*S/sqrt(n), M +qt(1-alpha/2,n-1)*S/sqrt(n))
+}
+print("Confidence Interval: ")
+conf_int(M,S,n,alpha)
+#d
+print("Confidence interval:")
+conf_int(M,S,n, 0.01)
+print("Confidence interval is wider!!")
+
+#e
+print("Confidence Interval variance:")
+interval = sigma.test(diamonds, conf.level =1-alpha)$conf.int
+print(interval)
+
+#TODO std conf level
+```
+Ex2 -case 3
+```{r}
+milk = na.omit(data$milk)
+#a
+#populationall nursing mothers
+#sample 20 women
+#mesurement - PCB
+#b & c
+n = length(milk)
+M = mean(milk)
+S2 = var(milk)
+S = sd(milk)
+print(c(M,S2,S))
+#d
+alpha = 0.05
+t.test(milk, conf.level = 1-alpha)$conf.int
+#e
+interval = sigma.test(milk, conf.level = 1-alpha)$conf.int
+print(interval)
+#TODO sd
+```
+
+Ex3 
+```{r}
+cigarettes = na.omit(data$cigarettes)
+
+#a
+alpha = 0.05
+z.test(cigarettes, sigma.x = 0.7, conf.level = 1-alpha)$conf.int
+#b
+#n>= (z*sigma*2/3)^2
+(qnorm(1-alpha/2)*0.7*2/0.3)^2
+```
+
+Ex4
+```{r}
+signal = na.omit(data$signal)
+
+sigma = 3
+n = length(signal)
+M = mean(signal)
+alpha = 0.05
+M
+z.test(signal, sigma.x = sigma, conf.level = 1 -alpha)$conf.int
+```
+Ex.5.
+```{r}
+n=1200
+M=4.7
+S=2.2
+alpha = 0.05
+
+myInterval = function(n,M,S,alpha){
+  span = qnorm(1-alpha/2)*S/sqrt(n)
+  c(M-span,M+span)
+}
+
+myInterval(n,M,S,alpha)
+zsum.test(M,S,n, conf.level = 1-alpha)$conf.int
+```
+
+Ex.6.
+```{r}
+lifetime = na.omit(data$lifetime)
+alpha = 0.05
+n=length(lifetime)
+zsum.test(mean(lifetime), sd(lifetime),n, conf.level = 1-alpha)$conf.int
+```
+
+Ex.7.
+```{r}
+#variance 25h^2
+S = 5
+alpha = 0.05
+total_length = 1
+(qnorm(1-alpha/2)*S/total_length)^2
+```
+
+Ex.8.
+```{r}
+S = 0.3
+alpha = 0.1
+total_length = 0.1
+
+(qnorm(1-alpha/2)*S/total_length)^2
+(qnorm(1-0.01/2)*S/total_length)^2
+```
+Ex.9.
+```{r}
+n = 100
+k = 3
+T = 3
+alpha = 0.05
+binom.test(T,n, conf.level = 1-alpha )$conf.int
+```
+
+Ex.10.
+```{r}
+#if p is 0.015 or greater
+n=100
+T=4
+alpha = 0.05
+binom.test(T,n, conf.level = 1-alpha )$conf.int
+```
+
+Ex.11.
+```{r}
+n = 120
+T = 24
+alpha = 0.1
+binom.test(T,n, conf.level = 1-alpha)$conf.int
+```
+Ex.12
+```{r}
+n=1000
+T=122
+alpha = 0.1
+binom.test(T,n, conf.level = 1-alpha)$conf.int
+```
+Ex.13
+```{r}
+alpha =0.02
+total_length=0.05
+p = 0.5
+
+(qnorm(1-alpha/2)*sqrt((1-p)*p)/ total_length)^2
+
+p=0.3
+(qnorm(1-alpha/2)*sqrt((1-p)*p)/ total_length)^2
+```
+
+Additional
+```{r}
+n=5000
+T =30
+alpha=0.05
+phat = T/n
+
+left_inter = max(0,phat - qnorm(1-alpha/2)*sqrt(phat*(1-phat)/n))
+right_inter = min(1,phat + qnorm(1-alpha/2)*sqrt(phat*(1-phat)/n))
+c(left_inter,right_inter)
+
+binom.test(T,n, conf.level = 1-alpha)$conf.int
+prop.test(T,n)$conf.int
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
