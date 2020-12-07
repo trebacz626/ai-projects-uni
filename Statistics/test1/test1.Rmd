@@ -1,0 +1,363 @@
+---
+title: "test1"
+output: html_notebook
+---
+# L3
+Ex.8.
+```{r}
+p =  0.2
+
+```
+
+#L4-5
+
+Ex.1.
+```{r}
+#a
+n = 10
+p = 0.1
+x=3
+pbinom(3,n,p)
+#b
+pnorm(3,n*p,sqrt(n*p*(1-p)))
+#c
+pnorm(3,n*p,sqrt(n*p*(1-p)))-pnorm(0,n*p,sqrt(n*p*(1-p)))
+```
+
+Ex.2.
+```{r}
+#a
+library(arm)
+sample = 500
+n = 20
+p = 0.2
+
+data = rbinom(sample,n,p)
+discrete.hist(data, , xlim=c(0,n))
+x=0:n
+plot(x, dbinom(x,n,p), type="h", xlim=c(0,n))
+plot(x, dpois(x,n*p), type="h", xlim=c(0,n))
+```
+```{r}
+#b
+plot(x,dbinom(x,n,p), col = "red", xlim=c(0,n))
+curve(dnorm(x,n*p,sqrt(n*p*(1-p))), xlim=c(0,n), add=TRUE)
+hist(data, freq=FALSE, add = TRUE, xlim=c(0,n))
+```
+Ex.3.
+```{r}
+curve(dexp(x,3))
+```
+
+Ex.4.
+```{r}
+lambda = 0.01
+#a
+P(x>200)
+1-pexp(200,rate = lambda)
+#b
+#P(x<=100)
+pexp(100,lambda)
+#c
+#P(x<500)
+pexp(499,lambda)
+
+pexp(10,lambda)
+```
+
+```{r}
+pexp(0.5,lambda)
+```
+
+
+
+Ex.5.
+```{r}
+m = 2.4
+#mean = 1/lambda
+lambda = 1/m
+lambda
+1-pexp(3,lambda)
+pexp(3.0000000001,lambda)-pexp(1.999999999,lambda)
+
+f = function(x){
+  dexp(x, lambda)
+}
+
+fe = function(x){
+  x* dexp(x, lambda)
+}
+
+integrate(f,2,3)
+integrate(fe,-Inf,Inf)
+```
+Ex.6.
+```{r}
+a=0.12
+b=0.14
+mi = 0.13
+sd = 0.005
+pnorm(b,mi,sd) -pnorm(a,mi,sd)
+curve(dnorm(x,mi,sd))
+```
+Ex.7.
+```{r}
+mi=120
+sd = 15
+pnorm(135,mi,sd)-pnorm(110,mi,sd)
+```
+
+Ex.8.
+```{r}
+mi = 200
+sigma2 = 400
+1-pnorm(157,mi,sqrt(sigma2))
+```
+
+Ex.9.
+```{r}
+mi = 46.8
+sigma = 1.75
+#a
+pnorm(50,mi,sigma)
+#b
+1-pnorm(48,mi,sigma)
+#c
+pnorm(mi+1.5*sigma,mi,sigma) - pnorm(mi-1.5*sigma,mi,sigma)
+```
+Ex.10.
+```{r}
+samples = 200
+n=30
+my_means = c()
+for( i in 1:200){
+  numbers = rnorm(n)
+  my_means = c(my_means,mean(numbers))
+}
+sd = 1/sqrt(n)
+a=5*sd
+hist(my_means, freq=FALSE, xlim=c(-a,a))
+curve(dnorm(x,0,sd),add=TRUE, xlim=c(-a,a))
+```
+Ex.11.
+```{r}
+samples = 200
+n = 30
+lambda = 4
+means=c()
+for(i in 1:samples){
+  means=c(means,mean(rpois(n, lambda)))
+}
+sd = sqrt(lambda/n)
+hist(means,freq=FALSE, xlim=c(lambda-5*sd,lambda+5*sd))
+curve(dnorm(x,lambda,sd), add=TRUE, xlim = c(lambda-5*sd,lambda+5*sd))
+```
+
+Ex.12.
+```{r}
+avg = 200
+sigma = 10
+n=25
+pnorm(202, avg,sigma/sqrt(n))- pnorm(199, avg, sigma/sqrt(n))
+
+pnorm(5100,avg*n,sigma*sqrt(n))
+```
+
+Ex.13.
+```{r}
+avg = 202
+sigma = 14
+n = 64
+pnorm(206,avg,sigma/sqrt(n))-pnorm(198,avg,sigma/sqrt(n))
+```
+
+Ex.14.
+```{r}
+avg = 0.5
+sigma = 0.2
+n=100
+avg*n
+sigma*sqrt(n)
+1- pnorm(47,avg*n,sigma*sqrt(n))
+```
+
+Ex.15.
+```{r}
+avg = 21
+sigma = 2.9
+n = 49
+pnorm(20,avg,sigma/sqrt(n))
+pnorm(1050,avg*n,sigma*sqrt(n)) - pnorm(980,avg*n,sigma*sqrt(n))
+```
+
+# L6
+
+```{r}
+data = read.csv('data_est.csv', sep =';')
+data
+```
+Ex1 - Case 3
+```{r}
+diamonds = na.omit(data$diamonds)
+#a)
+#population - all diamonds produced by factory
+#sample - 12 diamonds selected
+#measurement - weight
+#b)
+n = length(diamonds)
+M = mean(diamonds)
+S2 = var(diamonds)
+S = sd(diamonds)
+print(c("mean", "variance", "std"))
+print(c(M,S2,S))
+alpha = 0.05
+
+conf_int = function(M,S,n, alpha){
+  c(M-qt(1-alpha/2, n-1)*S/sqrt(n), M +qt(1-alpha/2,n-1)*S/sqrt(n))
+}
+print("Confidence Interval: ")
+conf_int(M,S,n,alpha)
+#d
+print("Confidence interval:")
+conf_int(M,S,n, 0.01)
+print("Confidence interval is wider!!")
+
+#e
+print("Confidence Interval variance:")
+interval = sigma.test(diamonds, conf.level =1-alpha)$conf.int
+print(interval)
+
+#TODO std conf level
+```
+Ex2 -case 3
+```{r}
+milk = na.omit(data$milk)
+#a
+#populationall nursing mothers
+#sample 20 women
+#mesurement - PCB
+#b & c
+n = length(milk)
+M = mean(milk)
+S2 = var(milk)
+S = sd(milk)
+print(c(M,S2,S))
+#d
+alpha = 0.05
+t.test(milk, conf.level = 1-alpha)$conf.int
+#e
+interval = sigma.test(milk, conf.level = 1-alpha)$conf.int
+print(interval)
+print(c(sqrt(interval[1]),sqrt(interval[2])))
+#TODO sd
+```
+
+Ex3 
+```{r}
+cigarettes = na.omit(data$cigarettes)
+
+#a
+alpha = 0.05
+z.test(cigarettes, sigma.x = 0.7, conf.level = 1-alpha)$conf.int
+#b
+#n>= (z*sigma*2/3)^2
+(qnorm(1-alpha/2)*0.7*2/0.3)^2
+```
+
+Ex4
+```{r}
+signal = na.omit(data$signal)
+
+sigma = 3
+n = length(signal)
+M = mean(signal)
+alpha = 0.05
+M
+z.test(signal, sigma.x = sigma, conf.level = 1 -alpha)$conf.int
+```
+Ex.5.
+```{r}
+n=1200
+M=4.7
+S=2.2
+alpha = 0.05
+
+myInterval = function(n,M,S,alpha){
+  span = qnorm(1-alpha/2)*S/sqrt(n)
+  c(M-span,M+span)
+}
+
+myInterval(n,M,S,alpha)
+zsum.test(M,S,n, conf.level = 1-alpha)$conf.int
+```
+
+Ex.6.
+```{r}
+lifetime = na.omit(data$lifetime)
+alpha = 0.05
+n=length(lifetime)
+zsum.test(mean(lifetime), sd(lifetime),n, conf.level = 1-alpha)$conf.int
+```
+
+Ex.7.
+```{r}
+#variance 25h^2
+S = 5
+alpha = 0.05
+total_length = 1
+(qnorm(1-alpha/2)*S/total_length)^2
+```
+
+Ex.8.
+```{r}
+S = 0.3
+alpha = 0.1
+total_length = 0.1
+
+(qnorm(1-alpha/2)*S/total_length)^2
+(qnorm(1-0.01/2)*S/total_length)^2
+```
+Ex.9.
+```{r}
+n = 100
+k = 3
+T = 3
+alpha = 0.05
+binom.test(T,n, conf.level = 1-alpha )$conf.int
+```
+
+Ex.10.
+```{r}
+#if p is 0.015 or greater
+n=100
+T=4
+alpha = 0.05
+binom.test(T,n, conf.level = 1-alpha )$conf.int
+```
+
+Ex.11.
+```{r}
+n = 120
+T = 24
+alpha = 0.1
+binom.test(T,n, conf.level = 1-alpha)$conf.int
+```
+Ex.12
+```{r}
+n=1000
+T=122
+alpha = 0.1
+binom.test(T,n, conf.level = 1-alpha)$conf.int
+```
+Ex.13
+```{r}
+alpha =0.02
+total_length=0.05
+p = 0.5
+
+(qnorm(1-alpha/2)*sqrt((1-p)*p)/ total_length)^2
+
+p=0.3
+(qnorm(1-alpha/2)*sqrt((1-p)*p)/ total_length)^2
+```
+
