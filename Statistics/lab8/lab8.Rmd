@@ -1,0 +1,150 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+Read Data
+```{r}
+data = read.csv("data_hip.csv", sep=";")
+```
+
+
+Ex.1.
+
+```{r}
+
+wind = c(na.omit(data$wind));wind
+#H0 <= 4
+#H1 > 4
+
+m = mean(wind);m
+t = t.test(wind,alternative = "greater", mu= 4);t
+# alplha > p-value 0.05 > 0.017 so we reject H0
+# on significance level 5% data confirms that building powerplant is profitable
+
+t = (m - 4)/(sd(wind)/sqrt(length(wind)));t
+
+# our criticial region R is (t(n-1,alpha),Inf)
+qt(1-0.05, length(wind)-1)
+#R is (1.796, Inf)
+#t belongs to R so we reject H0
+
+ttest = function(avg, mu0, sd, n, alpha, type){
+  t = (avg - mu0)/(sd/sqrt(n))
+  print(paste("pppp",1 -pt(t,n-1)))
+  kw = qt(1-alpha, n-1)
+  kw2 = qt(1-alpha, n-1)
+  if( type == "r"){
+    if( t > kw){
+      print("Reject H0")
+    }else{
+      print("No reason to reject H0")
+    }
+  }else if(type == "l"){
+    if( t < -kw){
+      print("Reject H0")
+    }else{
+      print("No reason to reject H0")
+    }
+  }else if(type =="b"){
+    if( (t > kw2) | (t < -kw2)){
+      print("Reject H0")
+    }else{
+      print("No reason to reject H0")
+    }
+  }
+}
+
+ttest(m,4,sd(wind),length(wind), 0.05, "r")
+```
+Ex.2.
+```{r}
+#Nuul mean of COP >= 3.5
+# h1 mean of COP < 3.5
+
+COP = c(na.omit(data$COP))
+m = mean(COP)
+mu_0 = 3.5
+n = length(COP)
+S = sd(COP)
+
+a=0.05
+t =t.test(COP, alternative = "less", mu = mu_0)
+t
+
+
+ttest(m, mu_0,S,n, a, "l")
+```
+
+Ex.3.
+```{r}
+temp = c(na.omit(data$temperature))
+
+mu_0 = 54
+alpha = 0.01
+sig = 2
+z.test(temp, sigma.x = sig, alternative = "two.sided",mu=mu_0)
+
+#alpha is less pvalue so there is no reason to reject H0
+#on signifigance level 1% data does not confirm that the activation temperature is different than 54
+
+
+mutest = function(avg, mu0, sd, n, alpha, type, trueSig){
+  if(trueSig){
+    t = (avg - mu0)/(sd/sqrt(n))
+    print(paste("ppppnorm",pnorm(-t)))
+    kw = qnorm(1-alpha)
+    kw2 = qnorm(1-alpha/2)
+  }else{
+    t = (avg - mu0)/(sd/sqrt(n))
+    print(paste("ppppt",1 -pt(t,n-1)))
+    kw = qt(1-alpha, n-1)
+    kw2 = qt(1-alpha/2, n-1)
+  }
+  if( type == "r"){
+    if( t > kw){
+      print("Reject H0")
+    }else{
+      print("No reason to reject H0")
+    }
+  }else if(type == "l"){
+    if( t < -kw){
+      print("Reject H0")
+    }else{
+      print("No reason to reject H0")
+    }
+  }else if(type =="b"){
+    if( (t > kw2) | (t < -kw2)){
+      print("Reject H0")
+    }else{
+      print("No reason to reject H0")
+    }
+  }
+}
+
+mutest(m,4,sig,length(temp), 0.05, "b", TRUE)
+```
+
+Ex.4.
+```{r}
+ depth = c(na.omit(data$depth))
+
+#H0: population mean of depth mu == 870
+#H1: population mean of depth mu != 870
+
+alpha = 0.05
+sigma = 5
+z.test(depth, sigma.x = sigma, mu=870)
+#alpha not bigger than p value so we can reject
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
