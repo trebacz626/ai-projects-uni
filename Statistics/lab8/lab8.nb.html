@@ -1926,107 +1926,169 @@ sample estimates:
 mean of x 
      3.35 </code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHRlc3QobSwgbXVfMCxTLG4sIGEsIFwibFwiKVxuYGBgIn0= -->
-<pre class="r"><code>ttest(m, mu_0,S,n, a, &quot;l&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXl0ZXN0KG1lYW4oQ09QKSxtdV8wLHNkKENPUCksIGxlbmd0aChDT1ApLCBhLFwibFwiLFRSVUUsRkFMU0UpXG5gYGAifQ== -->
+<pre class="r"><code>mytest(mean(COP),mu_0,sd(COP), length(COP), a,&quot;l&quot;,TRUE,FALSE)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiTm8gcmVhc29uIHRvIHJlamVjdCBIMFwiXG4ifQ== -->
-<pre><code>[1] &quot;No reason to reject H0&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiZWVlXCJcblsxXSBcInAgdmFsdWU6IDAuMTUyXCJcblsxXSBcIk5vIHJlYXNvbiBmb3IgSDAgcmVqZWN0aW9uXCJcbiJ9 -->
+<pre><code>[1] &quot;eee&quot;
+[1] &quot;p value: 0.152&quot;
+[1] &quot;No reason for H0 rejection&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Ex.3.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcCA9IGMobmEub21pdChkYXRhJHRlbXBlcmF0dXJlKSlcblxubXVfMCA9IDU0XG5hbHBoYSA9IDAuMDFcbnNpZyA9IDJcbnoudGVzdCh0ZW1wLCBzaWdtYS54ID0gc2lnLCBhbHRlcm5hdGl2ZSA9IFwidHdvLnNpZGVkXCIsbXU9bXVfMClcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcCA9IGMobmEub21pdChkYXRhJHRlbXBlcmF0dXJlKSlcblxubXVfMCA9IDU0XG5hbHBoYSA9IDAuMDFcbnNpZyA9IDJcbnoudGVzdCh0ZW1wLCBzaWdtYS54ID0gc2lnLCBhbHRlcm5hdGl2ZSA9IFwibGVzc1wiLG11PW11XzApXG5gYGAifQ== -->
 <pre class="r"><code>temp = c(na.omit(data$temperature))
 
 mu_0 = 54
 alpha = 0.01
 sig = 2
-z.test(temp, sigma.x = sig, alternative = &quot;two.sided&quot;,mu=mu_0)</code></pre>
+z.test(temp, sigma.x = sig, alternative = &quot;less&quot;,mu=mu_0)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5cdE9uZS1zYW1wbGUgei1UZXN0XG5cbmRhdGE6ICB0ZW1wXG56ID0gMS41LCBwLXZhbHVlID0gMC4xMzM2XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIG1lYW4gaXMgbm90IGVxdWFsIHRvIDU0XG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gNTMuNjkzMzYgNTYuMzA2NjRcbnNhbXBsZSBlc3RpbWF0ZXM6XG5tZWFuIG9mIHggXG4gICAgICAgNTUgXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5cdE9uZS1zYW1wbGUgei1UZXN0XG5cbmRhdGE6ICB0ZW1wXG56ID0gMS41LCBwLXZhbHVlID0gMC45MzMyXG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIG1lYW4gaXMgbGVzcyB0aGFuIDU0XG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gICAgICAgTkEgNTYuMDk2NTdcbnNhbXBsZSBlc3RpbWF0ZXM6XG5tZWFuIG9mIHggXG4gICAgICAgNTUgXG4ifQ== -->
 <pre><code>
     One-sample z-Test
 
 data:  temp
-z = 1.5, p-value = 0.1336
-alternative hypothesis: true mean is not equal to 54
+z = 1.5, p-value = 0.9332
+alternative hypothesis: true mean is less than 54
 95 percent confidence interval:
- 53.69336 56.30664
+       NA 56.09657
 sample estimates:
 mean of x 
        55 </code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2FscGhhIGlzIGxlc3MgcHZhbHVlIHNvIHRoZXJlIGlzIG5vIHJlYXNvbiB0byByZWplY3QgSDBcbiNvbiBzaWduaWZpZ2FuY2UgbGV2ZWwgMSUgZGF0YSBkb2VzIG5vdCBjb25maXJtIHRoYXQgdGhlIGFjdGl2YXRpb24gdGVtcGVyYXR1cmUgaXMgZGlmZmVyZW50IHRoYW4gNTRcblxuXG5tdXRlc3QgPSBmdW5jdGlvbihhdmcsIG11MCwgc2QsIG4sIGFscGhhLCB0eXBlLCB0cnVlU2lnKXtcbiAgaWYodHJ1ZVNpZyl7XG4gICAgdCA9IChhdmcgLSBtdTApLyhzZC9zcXJ0KG4pKVxuICAgIHByaW50KHBhc3RlKFwicHBwcG5vcm1cIixwbm9ybSgtdCkpKVxuICAgIGt3ID0gcW5vcm0oMS1hbHBoYSlcbiAgICBrdzIgPSBxbm9ybSgxLWFscGhhLzIpXG4gIH1lbHNle1xuICAgIHQgPSAoYXZnIC0gbXUwKS8oc2Qvc3FydChuKSlcbiAgICBwcmludChwYXN0ZShcInBwcHB0XCIsMSAtcHQodCxuLTEpKSlcbiAgICBrdyA9IHF0KDEtYWxwaGEsIG4tMSlcbiAgICBrdzIgPSBxdCgxLWFscGhhLzIsIG4tMSlcbiAgfVxuICBpZiggdHlwZSA9PSBcInJcIil7XG4gICAgaWYoIHQgPiBrdyl7XG4gICAgICBwcmludChcIlJlamVjdCBIMFwiKVxuICAgIH1lbHNle1xuICAgICAgcHJpbnQoXCJObyByZWFzb24gdG8gcmVqZWN0IEgwXCIpXG4gICAgfVxuICB9ZWxzZSBpZih0eXBlID09IFwibFwiKXtcbiAgICBpZiggdCA8IC1rdyl7XG4gICAgICBwcmludChcIlJlamVjdCBIMFwiKVxuICAgIH1lbHNle1xuICAgICAgcHJpbnQoXCJObyByZWFzb24gdG8gcmVqZWN0IEgwXCIpXG4gICAgfVxuICB9ZWxzZSBpZih0eXBlID09XCJiXCIpe1xuICAgIGlmKCAodCA+IGt3MikgfCAodCA8IC1rdzIpKXtcbiAgICAgIHByaW50KFwiUmVqZWN0IEgwXCIpXG4gICAgfWVsc2V7XG4gICAgICBwcmludChcIk5vIHJlYXNvbiB0byByZWplY3QgSDBcIilcbiAgICB9XG4gIH1cbn1cblxubXV0ZXN0KG0sNCxzaWcsbGVuZ3RoKHRlbXApLCAwLjA1LCBcImJcIiwgVFJVRSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2FscGhhIGlzIGxlc3MgcHZhbHVlIHNvIHRoZXJlIGlzIG5vIHJlYXNvbiB0byByZWplY3QgSDBcbiNvbiBzaWduaWZpZ2FuY2UgbGV2ZWwgMSUgZGF0YSBkb2VzIG5vdCBjb25maXJtIHRoYXQgdGhlIGFjdGl2YXRpb24gdGVtcGVyYXR1cmUgaXMgZGlmZmVyZW50IHRoYW4gNTRcblxubXl0ZXN0KG1lYW4odGVtcCksbXVfMCxzaWcsIGxlbmd0aCh0ZW1wKSwgYWxwaGEsXCJsXCIsVFJVRSxUUlVFKVxuYGBgIn0= -->
 <pre class="r"><code>#alpha is less pvalue so there is no reason to reject H0
 #on signifigance level 1% data does not confirm that the activation temperature is different than 54
 
-
-mutest = function(avg, mu0, sd, n, alpha, type, trueSig){
-  if(trueSig){
-    t = (avg - mu0)/(sd/sqrt(n))
-    print(paste(&quot;ppppnorm&quot;,pnorm(-t)))
-    kw = qnorm(1-alpha)
-    kw2 = qnorm(1-alpha/2)
-  }else{
-    t = (avg - mu0)/(sd/sqrt(n))
-    print(paste(&quot;ppppt&quot;,1 -pt(t,n-1)))
-    kw = qt(1-alpha, n-1)
-    kw2 = qt(1-alpha/2, n-1)
-  }
-  if( type == &quot;r&quot;){
-    if( t &gt; kw){
-      print(&quot;Reject H0&quot;)
-    }else{
-      print(&quot;No reason to reject H0&quot;)
-    }
-  }else if(type == &quot;l&quot;){
-    if( t &lt; -kw){
-      print(&quot;Reject H0&quot;)
-    }else{
-      print(&quot;No reason to reject H0&quot;)
-    }
-  }else if(type ==&quot;b&quot;){
-    if( (t &gt; kw2) | (t &lt; -kw2)){
-      print(&quot;Reject H0&quot;)
-    }else{
-      print(&quot;No reason to reject H0&quot;)
-    }
-  }
-}
-
-mutest(m,4,sig,length(temp), 0.05, &quot;b&quot;, TRUE)</code></pre>
+mytest(mean(temp),mu_0,sig, length(temp), alpha,&quot;l&quot;,TRUE,TRUE)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwicHBwcG5vcm0gMC4xNTI2ODE1OTM4MzMxMVwiXG5bMV0gXCJObyByZWFzb24gdG8gcmVqZWN0IEgwXCJcbiJ9 -->
-<pre><code>[1] &quot;ppppnorm 0.15268159383311&quot;
-[1] &quot;No reason to reject H0&quot;</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiZWVlXCJcblsxXSBcInAgdmFsdWU6IDAuOTMzXCJcblsxXSBcIk5vIHJlYXNvbiBmb3IgSDAgcmVqZWN0aW9uXCJcbiJ9 -->
+<pre><code>[1] &quot;eee&quot;
+[1] &quot;p value: 0.933&quot;
+[1] &quot;No reason for H0 rejection&quot;</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Ex.4.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIGRlcHRoID0gYyhuYS5vbWl0KGRhdGEkZGVwdGgpKVxuXG5hbHBoYSA9IDAuMDVcbnNpZ21hID0gNVxuei50ZXN0KGRlcHRoLCBzaWdtYS54ID0gc2lnbWEsIG11PTg3MClcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIGRlcHRoID0gYyhuYS5vbWl0KGRhdGEkZGVwdGgpKVxuXG4jSDA6IHBvcHVsYXRpb24gbWVhbiBvZiBkZXB0aCBtdSA9PSA4NzBcbiNIMTogcG9wdWxhdGlvbiBtZWFuIG9mIGRlcHRoIG11ICE9IDg3MFxuXG5hbHBoYSA9IDAuMDVcbnNpZ21hID0gNVxuei50ZXN0KGRlcHRoLCBzaWdtYS54ID0gc2lnbWEsIG11PTg3MCwgYWx0ZXJuYXRpdmU9XCJsZXNzXCIpXG5gYGAifQ== -->
 <pre class="r"><code> depth = c(na.omit(data$depth))
+
+#H0: population mean of depth mu == 870
+#H1: population mean of depth mu != 870
 
 alpha = 0.05
 sigma = 5
-z.test(depth, sigma.x = sigma, mu=870)</code></pre>
+z.test(depth, sigma.x = sigma, mu=870, alternative=&quot;less&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5cdE9uZS1zYW1wbGUgei1UZXN0XG5cbmRhdGE6ICBkZXB0aFxueiA9IC0wLjQ0NzIxLCBwLXZhbHVlID0gMC42NTQ3XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIG1lYW4gaXMgbm90IGVxdWFsIHRvIDg3MFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuIDg2NC42MTc0IDg3My4zODI2XG5zYW1wbGUgZXN0aW1hdGVzOlxubWVhbiBvZiB4IFxuICAgICAgODY5IFxuIn0= -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5cdE9uZS1zYW1wbGUgei1UZXN0XG5cbmRhdGE6ICBkZXB0aFxueiA9IC0wLjQ0NzIxLCBwLXZhbHVlID0gMC4zMjc0XG5hbHRlcm5hdGl2ZSBoeXBvdGhlc2lzOiB0cnVlIG1lYW4gaXMgbGVzcyB0aGFuIDg3MFxuOTUgcGVyY2VudCBjb25maWRlbmNlIGludGVydmFsOlxuICAgICAgTkEgODcyLjY3OFxuc2FtcGxlIGVzdGltYXRlczpcbm1lYW4gb2YgeCBcbiAgICAgIDg2OSBcbiJ9 -->
 <pre><code>
     One-sample z-Test
 
 data:  depth
-z = -0.44721, p-value = 0.6547
-alternative hypothesis: true mean is not equal to 870
+z = -0.44721, p-value = 0.3274
+alternative hypothesis: true mean is less than 870
 95 percent confidence interval:
- 864.6174 873.3826
+      NA 872.678
 sample estimates:
 mean of x 
       869 </code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXl0ZXN0KG1lYW4oZGVwdGgpLDg3MCxzaWdtYSwgbGVuZ3RoKGRlcHRoKSwgYWxwaGEsXCJsXCIsVFJVRSxUUlVFKVxuYGBgIn0= -->
+<pre class="r"><code>mytest(mean(depth),870,sigma, length(depth), alpha,&quot;l&quot;,TRUE,TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiZWVlXCJcblsxXSBcInAgdmFsdWU6IDAuMzI3XCJcblsxXSBcImxvb2xcIlxuXG5cdE9uZSBTYW1wbGUgdC10ZXN0XG5cbmRhdGE6ICBDT1BcbnQgPSAtMS4wODk4LCBkZiA9IDksIHAtdmFsdWUgPSAwLjE1MjFcbmFsdGVybmF0aXZlIGh5cG90aGVzaXM6IHRydWUgbWVhbiBpcyBsZXNzIHRoYW4gMy41XG45NSBwZXJjZW50IGNvbmZpZGVuY2UgaW50ZXJ2YWw6XG4gICAgIC1JbmYgMy42MDIzMDdcbnNhbXBsZSBlc3RpbWF0ZXM6XG5tZWFuIG9mIHggXG4gICAgIDMuMzUgXG5cblsxXSAxLjY0NDg1NFxuWzFdIFwiTm8gcmVhc29uIGZvciBIMCByZWplY3Rpb25cIlxuIn0= -->
+<pre><code>[1] &quot;eee&quot;
+[1] &quot;p value: 0.327&quot;
+[1] &quot;lool&quot;
+
+    One Sample t-test
+
+data:  COP
+t = -1.0898, df = 9, p-value = 0.1521
+alternative hypothesis: true mean is less than 3.5
+95 percent confidence interval:
+     -Inf 3.602307
+sample estimates:
+mean of x 
+     3.35 
+
+[1] 1.644854
+[1] &quot;No reason for H0 rejection&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2FscGhhIG5vdCBiaWdnZXIgdGhhbiBwIHZhbHVlIHNvIHdlIGNhbiByZWplY3RcbmBgYCJ9 -->
+<pre class="r"><code>#alpha not bigger than p value so we can reject</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXl0ZXN0ID0gZnVuY3Rpb24oYXZnLG0wLHNpZyxuLGFscGhhLCB0eXBlLCBJU19OT1JNQUwsIElTX1RSVUVfU0lHTUEpe1xuICBwcmludChcImVlZVwiKVxuICBpZihJU19OT1JNQUwgJiAhSVNfVFJVRV9TSUdNQSApe1xuICAgIHQgPSAoYXZnLW0wKS8oc2lnL3NxcnQobikpXG4gICAga3cgPSBxdCgxLWFscGhhLCBuLTEpXG4gICAga3cyID0gcXQoMS1hbHBoYS8yLG4tMSlcbiAgICBcbiAgICBpZih0eXBlPT1cImxcIil7XG4gICAgICBwcmludChwYXN0ZShcInAgdmFsdWU6XCIsIHJvdW5kKHB0KHQsbi0xKSwzKSkpXG4gICAgICBpZiggdCA8IC1rdyl7XG4gICAgICAgIHByaW50KFwiUmVqZWN0IEgwXCIpXG4gICAgICB9ZWxzZXtcbiAgICAgICAgcHJpbnQoXCJObyByZWFzb24gZm9yIEgwIHJlamVjdGlvblwiKVxuICAgICAgfVxuICAgIH1lbHNlIGlmKHR5cGUgPT1cImdcIil7XG4gICAgICBwcmludChwYXN0ZShcInAgdmFsdWU6XCIsIHJvdW5kKDEtcHQodCxuLTEpLDMpKSlcbiAgICAgIGlmKCB0ID4ga3cpe1xuICAgICAgICBwcmludChcIlJlamVjdCBIMFwiKVxuICAgICAgfWVsc2V7XG4gICAgICAgIHByaW50KFwiTm8gcmVhc29uIGZvciBIMCByZWplY3Rpb25cIilcbiAgICAgIH1cbiAgICB9ZWxzZSBpZih0eXBlID09XCJlXCIpe1xuICAgICAgcHJpbnQocGFzdGUoXCJwIHZhbHVlOlwiLCByb3VuZCgyKnB0KC1hYnModCksbi0xKSwzKSkpXG4gICAgICBpZiggKHQgPiBrdzIpfCB0IDwgLSBrdzIpe1xuICAgICAgICBwcmludChcIlJlamVjdCBIMFwiKVxuICAgICAgfWVsc2V7XG4gICAgICAgIHByaW50KFwiTm8gcmVhc29uIGZvciBIMCByZWplY3Rpb25cIilcbiAgICAgIH1cbiAgICB9XG4gIH1lbHNle1xuICAgIHogPSAoYXZnLW0wKS8oc2lnL3NxcnQobikpXG4gICAga3cgPSBxbm9ybSgxLWFscGhhKVxuICAgIGt3MiA9IHFub3JtKDEtYWxwaGEvMilcbiAgICBcbiAgICBpZih0eXBlPT1cImxcIil7XG4gICAgICBwcmludChwYXN0ZShcInAgdmFsdWU6XCIsIHJvdW5kKHBub3JtKHopLDMpKSlcbiAgICAgIGlmKCB6IDwgLWt3KXtcbiAgICAgICAgcHJpbnQoXCJSZWplY3QgSDBcIilcbiAgICAgIH1lbHNle1xuICAgICAgICBwcmludChcIk5vIHJlYXNvbiBmb3IgSDAgcmVqZWN0aW9uXCIpXG4gICAgICB9XG4gICAgfWVsc2UgaWYodHlwZSA9PVwiZ1wiKXtcbiAgICAgIHByaW50KHBhc3RlKFwicCB2YWx1ZTpcIiwgcm91bmQoMS1wbm9ybSh0KSwzKSkpXG4gICAgICBpZiggeiA+IGt3KXtcbiAgICAgICAgcHJpbnQoXCJSZWplY3QgSDBcIilcbiAgICAgIH1lbHNle1xuICAgICAgICBwcmludChcIk5vIHJlYXNvbiBmb3IgSDAgcmVqZWN0aW9uXCIpXG4gICAgICB9XG4gICAgfWVsc2UgaWYodHlwZSA9PSBcImVcIil7XG4gICAgICBwcmludChwYXN0ZShcInAgdmFsdWU6XCIsIHJvdW5kKDIqcG5vcm0oLWFicyh0KSksMykpKVxuICAgICAgaWYoICh6ID4ga3cyKXwgeiA8IC0ga3cyKXtcbiAgICAgICAgcHJpbnQoXCJSZWplY3QgSDBcIilcbiAgICAgIH1lbHNle1xuICAgICAgICBwcmludChcIk5vIHJlYXNvbiBmb3IgSDAgcmVqZWN0aW9uXCIpXG4gICAgICB9XG4gICAgfVxuICB9XG59XG5cblxuXG5gYGAifQ== -->
+<pre class="r"><code>mytest = function(avg,m0,sig,n,alpha, type, IS_NORMAL, IS_TRUE_SIGMA){
+  print(&quot;eee&quot;)
+  if(IS_NORMAL &amp; !IS_TRUE_SIGMA ){
+    t = (avg-m0)/(sig/sqrt(n))
+    kw = qt(1-alpha, n-1)
+    kw2 = qt(1-alpha/2,n-1)
+    
+    if(type==&quot;l&quot;){
+      print(paste(&quot;p value:&quot;, round(pt(t,n-1),3)))
+      if( t &lt; -kw){
+        print(&quot;Reject H0&quot;)
+      }else{
+        print(&quot;No reason for H0 rejection&quot;)
+      }
+    }else if(type ==&quot;g&quot;){
+      print(paste(&quot;p value:&quot;, round(1-pt(t,n-1),3)))
+      if( t &gt; kw){
+        print(&quot;Reject H0&quot;)
+      }else{
+        print(&quot;No reason for H0 rejection&quot;)
+      }
+    }else if(type ==&quot;e&quot;){
+      print(paste(&quot;p value:&quot;, round(2*pt(-abs(t),n-1),3)))
+      if( (t &gt; kw2)| t &lt; - kw2){
+        print(&quot;Reject H0&quot;)
+      }else{
+        print(&quot;No reason for H0 rejection&quot;)
+      }
+    }
+  }else{
+    z = (avg-m0)/(sig/sqrt(n))
+    kw = qnorm(1-alpha)
+    kw2 = qnorm(1-alpha/2)
+    
+    if(type==&quot;l&quot;){
+      print(paste(&quot;p value:&quot;, round(pnorm(z),3)))
+      if( z &lt; -kw){
+        print(&quot;Reject H0&quot;)
+      }else{
+        print(&quot;No reason for H0 rejection&quot;)
+      }
+    }else if(type ==&quot;g&quot;){
+      print(paste(&quot;p value:&quot;, round(1-pnorm(t),3)))
+      if( z &gt; kw){
+        print(&quot;Reject H0&quot;)
+      }else{
+        print(&quot;No reason for H0 rejection&quot;)
+      }
+    }else if(type == &quot;e&quot;){
+      print(paste(&quot;p value:&quot;, round(2*pnorm(-abs(t)),3)))
+      if( (z &gt; kw2)| z &lt; - kw2){
+        print(&quot;Reject H0&quot;)
+      }else{
+        print(&quot;No reason for H0 rejection&quot;)
+      }
+    }
+  }
+}
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
@@ -2034,7 +2096,7 @@ mean of x
 <p>The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ3RybCtTaGlmdCtFbnRlciouIAoKUmVhZCBEYXRhCmBgYHtyfQpkYXRhID0gcmVhZC5jc3YoImRhdGFfaGlwLmNzdiIsIHNlcD0iOyIpCmBgYAoKCkV4LjEuCgpgYGB7cn0KCndpbmQgPSBjKG5hLm9taXQoZGF0YSR3aW5kKSk7d2luZAojSDAgPD0gNAojSDEgPiA0CgptID0gbWVhbih3aW5kKTttCnQgPSB0LnRlc3Qod2luZCxhbHRlcm5hdGl2ZSA9ICJncmVhdGVyIiwgbXU9IDQpO3QKIyBhbHBsaGEgPiBwLXZhbHVlIDAuMDUgPiAwLjAxNyBzbyB3ZSByZWplY3QgSDAKIyBvbiBzaWduaWZpY2FuY2UgbGV2ZWwgNSUgZGF0YSBjb25maXJtcyB0aGF0IGJ1aWxkaW5nIHBvd2VycGxhbnQgaXMgcHJvZml0YWJsZQoKdCA9IChtIC0gNCkvKHNkKHdpbmQpL3NxcnQobGVuZ3RoKHdpbmQpKSk7dAoKIyBvdXIgY3JpdGljaWFsIHJlZ2lvbiBSIGlzICh0KG4tMSxhbHBoYSksSW5mKQpxdCgxLTAuMDUsIGxlbmd0aCh3aW5kKS0xKQojUiBpcyAoMS43OTYsIEluZikKI3QgYmVsb25ncyB0byBSIHNvIHdlIHJlamVjdCBIMAoKdHRlc3QgPSBmdW5jdGlvbihhdmcsIG11MCwgc2QsIG4sIGFscGhhLCB0eXBlKXsKICB0ID0gKGF2ZyAtIG11MCkvKHNkL3NxcnQobikpCiAgcHJpbnQocGFzdGUoInBwcHAiLDEgLXB0KHQsbi0xKSkpCiAga3cgPSBxdCgxLWFscGhhLCBuLTEpCiAga3cyID0gcXQoMS1hbHBoYSwgbi0xKQogIGlmKCB0eXBlID09ICJyIil7CiAgICBpZiggdCA+IGt3KXsKICAgICAgcHJpbnQoIlJlamVjdCBIMCIpCiAgICB9ZWxzZXsKICAgICAgcHJpbnQoIk5vIHJlYXNvbiB0byByZWplY3QgSDAiKQogICAgfQogIH1lbHNlIGlmKHR5cGUgPT0gImwiKXsKICAgIGlmKCB0IDwgLWt3KXsKICAgICAgcHJpbnQoIlJlamVjdCBIMCIpCiAgICB9ZWxzZXsKICAgICAgcHJpbnQoIk5vIHJlYXNvbiB0byByZWplY3QgSDAiKQogICAgfQogIH1lbHNlIGlmKHR5cGUgPT0iYiIpewogICAgaWYoICh0ID4ga3cyKSB8ICh0IDwgLWt3MikpewogICAgICBwcmludCgiUmVqZWN0IEgwIikKICAgIH1lbHNlewogICAgICBwcmludCgiTm8gcmVhc29uIHRvIHJlamVjdCBIMCIpCiAgICB9CiAgfQp9Cgp0dGVzdChtLDQsc2Qod2luZCksbGVuZ3RoKHdpbmQpLCAwLjA1LCAiciIpCmBgYApFeC4yLgpgYGB7cn0KI051dWwgbWVhbiBvZiBDT1AgPj0gMy41CiMgaDEgbWVhbiBvZiBDT1AgPCAzLjUKCkNPUCA9IGMobmEub21pdChkYXRhJENPUCkpCm0gPSBtZWFuKENPUCkKbXVfMCA9IDMuNQpuID0gbGVuZ3RoKENPUCkKUyA9IHNkKENPUCkKCmE9MC4wNQp0ID10LnRlc3QoQ09QLCBhbHRlcm5hdGl2ZSA9ICJsZXNzIiwgbXUgPSBtdV8wKQp0CgoKdHRlc3QobSwgbXVfMCxTLG4sIGEsICJsIikKYGBgCgpFeC4zLgpgYGB7cn0KdGVtcCA9IGMobmEub21pdChkYXRhJHRlbXBlcmF0dXJlKSkKCm11XzAgPSA1NAphbHBoYSA9IDAuMDEKc2lnID0gMgp6LnRlc3QodGVtcCwgc2lnbWEueCA9IHNpZywgYWx0ZXJuYXRpdmUgPSAidHdvLnNpZGVkIixtdT1tdV8wKQoKI2FscGhhIGlzIGxlc3MgcHZhbHVlIHNvIHRoZXJlIGlzIG5vIHJlYXNvbiB0byByZWplY3QgSDAKI29uIHNpZ25pZmlnYW5jZSBsZXZlbCAxJSBkYXRhIGRvZXMgbm90IGNvbmZpcm0gdGhhdCB0aGUgYWN0aXZhdGlvbiB0ZW1wZXJhdHVyZSBpcyBkaWZmZXJlbnQgdGhhbiA1NAoKCm11dGVzdCA9IGZ1bmN0aW9uKGF2ZywgbXUwLCBzZCwgbiwgYWxwaGEsIHR5cGUsIHRydWVTaWcpewogIGlmKHRydWVTaWcpewogICAgdCA9IChhdmcgLSBtdTApLyhzZC9zcXJ0KG4pKQogICAgcHJpbnQocGFzdGUoInBwcHBub3JtIixwbm9ybSgtdCkpKQogICAga3cgPSBxbm9ybSgxLWFscGhhKQogICAga3cyID0gcW5vcm0oMS1hbHBoYS8yKQogIH1lbHNlewogICAgdCA9IChhdmcgLSBtdTApLyhzZC9zcXJ0KG4pKQogICAgcHJpbnQocGFzdGUoInBwcHB0IiwxIC1wdCh0LG4tMSkpKQogICAga3cgPSBxdCgxLWFscGhhLCBuLTEpCiAgICBrdzIgPSBxdCgxLWFscGhhLzIsIG4tMSkKICB9CiAgaWYoIHR5cGUgPT0gInIiKXsKICAgIGlmKCB0ID4ga3cpewogICAgICBwcmludCgiUmVqZWN0IEgwIikKICAgIH1lbHNlewogICAgICBwcmludCgiTm8gcmVhc29uIHRvIHJlamVjdCBIMCIpCiAgICB9CiAgfWVsc2UgaWYodHlwZSA9PSAibCIpewogICAgaWYoIHQgPCAta3cpewogICAgICBwcmludCgiUmVqZWN0IEgwIikKICAgIH1lbHNlewogICAgICBwcmludCgiTm8gcmVhc29uIHRvIHJlamVjdCBIMCIpCiAgICB9CiAgfWVsc2UgaWYodHlwZSA9PSJiIil7CiAgICBpZiggKHQgPiBrdzIpIHwgKHQgPCAta3cyKSl7CiAgICAgIHByaW50KCJSZWplY3QgSDAiKQogICAgfWVsc2V7CiAgICAgIHByaW50KCJObyByZWFzb24gdG8gcmVqZWN0IEgwIikKICAgIH0KICB9Cn0KCm11dGVzdChtLDQsc2lnLGxlbmd0aCh0ZW1wKSwgMC4wNSwgImIiLCBUUlVFKQpgYGAKCkV4LjQuCmBgYHtyfQogZGVwdGggPSBjKG5hLm9taXQoZGF0YSRkZXB0aCkpCgojSDA6IHBvcHVsYXRpb24gbWVhbiBvZiBkZXB0aCBtdSA9PSA4NzAKI0gxOiBwb3B1bGF0aW9uIG1lYW4gb2YgZGVwdGggbXUgIT0gODcwCgphbHBoYSA9IDAuMDUKc2lnbWEgPSA1CnoudGVzdChkZXB0aCwgc2lnbWEueCA9IHNpZ21hLCBtdT04NzApCiNhbHBoYSBub3QgYmlnZ2VyIHRoYW4gcCB2YWx1ZSBzbyB3ZSBjYW4gcmVqZWN0CmBgYAoKCkFkZCBhIG5ldyBjaHVuayBieSBjbGlja2luZyB0aGUgKkluc2VydCBDaHVuayogYnV0dG9uIG9uIHRoZSB0b29sYmFyIG9yIGJ5IHByZXNzaW5nICpDdHJsK0FsdCtJKi4KCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ3RybCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLgoKVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ3RybCtTaGlmdCtFbnRlciouIAoKUmVhZCBEYXRhCmBgYHtyfQpkYXRhID0gcmVhZC5jc3YoImRhdGFfaGlwLmNzdiIsIHNlcD0iOyIpCmBgYAoKCkV4LjEuCgpgYGB7cn0KCndpbmQgPSBjKG5hLm9taXQoZGF0YSR3aW5kKSk7d2luZAojSDAgPD0gNAojSDEgPiA0CgptID0gbWVhbih3aW5kKTttCnQgPSB0LnRlc3Qod2luZCxhbHRlcm5hdGl2ZSA9ICJncmVhdGVyIiwgbXU9IDQpO3QKIyBhbHBsaGEgPiBwLXZhbHVlIDAuMDUgPiAwLjAxNyBzbyB3ZSByZWplY3QgSDAKIyBvbiBzaWduaWZpY2FuY2UgbGV2ZWwgNSUgZGF0YSBjb25maXJtcyB0aGF0IGJ1aWxkaW5nIHBvd2VycGxhbnQgaXMgcHJvZml0YWJsZQoKdCA9IChtIC0gNCkvKHNkKHdpbmQpL3NxcnQobGVuZ3RoKHdpbmQpKSk7dAoKIyBvdXIgY3JpdGljaWFsIHJlZ2lvbiBSIGlzICh0KG4tMSxhbHBoYSksSW5mKQpxdCgxLTAuMDUsIGxlbmd0aCh3aW5kKS0xKQojUiBpcyAoMS43OTYsIEluZikKI3QgYmVsb25ncyB0byBSIHNvIHdlIHJlamVjdCBIMAoKdHRlc3QgPSBmdW5jdGlvbihhdmcsIG11MCwgc2QsIG4sIGFscGhhLCB0eXBlKXsKICB0ID0gKGF2ZyAtIG11MCkvKHNkL3NxcnQobikpCiAgcHJpbnQocGFzdGUoInBwcHAiLDEgLXB0KHQsbi0xKSkpCiAga3cgPSBxdCgxLWFscGhhLCBuLTEpCiAga3cyID0gcXQoMS1hbHBoYSwgbi0xKQogIGlmKCB0eXBlID09ICJyIil7CiAgICBpZiggdCA+IGt3KXsKICAgICAgcHJpbnQoIlJlamVjdCBIMCIpCiAgICB9ZWxzZXsKICAgICAgcHJpbnQoIk5vIHJlYXNvbiB0byByZWplY3QgSDAiKQogICAgfQogIH1lbHNlIGlmKHR5cGUgPT0gImwiKXsKICAgIGlmKCB0IDwgLWt3KXsKICAgICAgcHJpbnQoIlJlamVjdCBIMCIpCiAgICB9ZWxzZXsKICAgICAgcHJpbnQoIk5vIHJlYXNvbiB0byByZWplY3QgSDAiKQogICAgfQogIH1lbHNlIGlmKHR5cGUgPT0iYiIpewogICAgaWYoICh0ID4ga3cyKSB8ICh0IDwgLWt3MikpewogICAgICBwcmludCgiUmVqZWN0IEgwIikKICAgIH1lbHNlewogICAgICBwcmludCgiTm8gcmVhc29uIHRvIHJlamVjdCBIMCIpCiAgICB9CiAgfQp9Cgp0dGVzdChtLDQsc2Qod2luZCksbGVuZ3RoKHdpbmQpLCAwLjA1LCAiciIpCmBgYApFeC4yLgpgYGB7cn0KI051dWwgbWVhbiBvZiBDT1AgPj0gMy41CiMgaDEgbWVhbiBvZiBDT1AgPCAzLjUKCkNPUCA9IGMobmEub21pdChkYXRhJENPUCkpCm0gPSBtZWFuKENPUCkKbXVfMCA9IDMuNQpuID0gbGVuZ3RoKENPUCkKUyA9IHNkKENPUCkKCmE9MC4wNQp0ID10LnRlc3QoQ09QLCBhbHRlcm5hdGl2ZSA9ICJsZXNzIiwgbXUgPSBtdV8wKQp0CgoKbXl0ZXN0KG1lYW4oQ09QKSxtdV8wLHNkKENPUCksIGxlbmd0aChDT1ApLCBhLCJsIixUUlVFLEZBTFNFKQpgYGAKCkV4LjMuCmBgYHtyfQp0ZW1wID0gYyhuYS5vbWl0KGRhdGEkdGVtcGVyYXR1cmUpKQoKbXVfMCA9IDU0CmFscGhhID0gMC4wMQpzaWcgPSAyCnoudGVzdCh0ZW1wLCBzaWdtYS54ID0gc2lnLCBhbHRlcm5hdGl2ZSA9ICJsZXNzIixtdT1tdV8wKQoKI2FscGhhIGlzIGxlc3MgcHZhbHVlIHNvIHRoZXJlIGlzIG5vIHJlYXNvbiB0byByZWplY3QgSDAKI29uIHNpZ25pZmlnYW5jZSBsZXZlbCAxJSBkYXRhIGRvZXMgbm90IGNvbmZpcm0gdGhhdCB0aGUgYWN0aXZhdGlvbiB0ZW1wZXJhdHVyZSBpcyBkaWZmZXJlbnQgdGhhbiA1NAoKbXl0ZXN0KG1lYW4odGVtcCksbXVfMCxzaWcsIGxlbmd0aCh0ZW1wKSwgYWxwaGEsImwiLFRSVUUsVFJVRSkKYGBgCgpFeC40LgpgYGB7cn0KIGRlcHRoID0gYyhuYS5vbWl0KGRhdGEkZGVwdGgpKQoKI0gwOiBwb3B1bGF0aW9uIG1lYW4gb2YgZGVwdGggbXUgPT0gODcwCiNIMTogcG9wdWxhdGlvbiBtZWFuIG9mIGRlcHRoIG11ICE9IDg3MAoKYWxwaGEgPSAwLjA1CnNpZ21hID0gNQp6LnRlc3QoZGVwdGgsIHNpZ21hLnggPSBzaWdtYSwgbXU9ODcwLCBhbHRlcm5hdGl2ZT0ibGVzcyIpCgoKbXl0ZXN0KG1lYW4oZGVwdGgpLDg3MCxzaWdtYSwgbGVuZ3RoKGRlcHRoKSwgYWxwaGEsImwiLFRSVUUsVFJVRSkKI2FscGhhIG5vdCBiaWdnZXIgdGhhbiBwIHZhbHVlIHNvIHdlIGNhbiByZWplY3QKYGBgCgpgYGB7cn0KI0ZvciBjYXNlIHdoZW4gZGlzdHJpYnV0aW9uIGlzIG9ua25vd24gd2UganVzdCBuZWVkIHRvIHBhc3Mgc2QoZGF0YSkgdG8gc2lnIHZhcmlhYmxlCm15dGVzdCA9IGZ1bmN0aW9uKGF2ZyxtMCxzaWcsbixhbHBoYSwgdHlwZSwgSVNfTk9STUFMLCBJU19UUlVFX1NJR01BKXsKICBwcmludCgiZWVlIikKICBpZihJU19OT1JNQUwgJiAhSVNfVFJVRV9TSUdNQSApewogICAgdCA9IChhdmctbTApLyhzaWcvc3FydChuKSkKICAgIGt3ID0gcXQoMS1hbHBoYSwgbi0xKQogICAga3cyID0gcXQoMS1hbHBoYS8yLG4tMSkKICAgIAogICAgaWYodHlwZT09ImwiKXsKICAgICAgcHJpbnQocGFzdGUoInAgdmFsdWU6Iiwgcm91bmQocHQodCxuLTEpLDMpKSkKICAgICAgaWYoIHQgPCAta3cpewogICAgICAgIHByaW50KCJSZWplY3QgSDAiKQogICAgICB9ZWxzZXsKICAgICAgICBwcmludCgiTm8gcmVhc29uIGZvciBIMCByZWplY3Rpb24iKQogICAgICB9CiAgICB9ZWxzZSBpZih0eXBlID09ImciKXsKICAgICAgcHJpbnQocGFzdGUoInAgdmFsdWU6Iiwgcm91bmQoMS1wdCh0LG4tMSksMykpKQogICAgICBpZiggdCA+IGt3KXsKICAgICAgICBwcmludCgiUmVqZWN0IEgwIikKICAgICAgfWVsc2V7CiAgICAgICAgcHJpbnQoIk5vIHJlYXNvbiBmb3IgSDAgcmVqZWN0aW9uIikKICAgICAgfQogICAgfWVsc2UgaWYodHlwZSA9PSJlIil7CiAgICAgIHByaW50KHBhc3RlKCJwIHZhbHVlOiIsIHJvdW5kKDIqcHQoLWFicyh0KSxuLTEpLDMpKSkKICAgICAgaWYoICh0ID4ga3cyKXwgdCA8IC0ga3cyKXsKICAgICAgICBwcmludCgiUmVqZWN0IEgwIikKICAgICAgfWVsc2V7CiAgICAgICAgcHJpbnQoIk5vIHJlYXNvbiBmb3IgSDAgcmVqZWN0aW9uIikKICAgICAgfQogICAgfQogIH1lbHNlewogICAgeiA9IChhdmctbTApLyhzaWcvc3FydChuKSkKICAgIGt3ID0gcW5vcm0oMS1hbHBoYSkKICAgIGt3MiA9IHFub3JtKDEtYWxwaGEvMikKICAgIAogICAgaWYodHlwZT09ImwiKXsKICAgICAgcHJpbnQocGFzdGUoInAgdmFsdWU6Iiwgcm91bmQocG5vcm0oeiksMykpKQogICAgICBpZiggeiA8IC1rdyl7CiAgICAgICAgcHJpbnQoIlJlamVjdCBIMCIpCiAgICAgIH1lbHNlewogICAgICAgIHByaW50KCJObyByZWFzb24gZm9yIEgwIHJlamVjdGlvbiIpCiAgICAgIH0KICAgIH1lbHNlIGlmKHR5cGUgPT0iZyIpewogICAgICBwcmludChwYXN0ZSgicCB2YWx1ZToiLCByb3VuZCgxLXBub3JtKHQpLDMpKSkKICAgICAgaWYoIHogPiBrdyl7CiAgICAgICAgcHJpbnQoIlJlamVjdCBIMCIpCiAgICAgIH1lbHNlewogICAgICAgIHByaW50KCJObyByZWFzb24gZm9yIEgwIHJlamVjdGlvbiIpCiAgICAgIH0KICAgIH1lbHNlIGlmKHR5cGUgPT0gImUiKXsKICAgICAgcHJpbnQocGFzdGUoInAgdmFsdWU6Iiwgcm91bmQoMipwbm9ybSgtYWJzKHQpKSwzKSkpCiAgICAgIGlmKCAoeiA+IGt3Mil8IHogPCAtIGt3Mil7CiAgICAgICAgcHJpbnQoIlJlamVjdCBIMCIpCiAgICAgIH1lbHNlewogICAgICAgIHByaW50KCJObyByZWFzb24gZm9yIEgwIHJlamVjdGlvbiIpCiAgICAgIH0KICAgIH0KICB9Cn0KYGBgCgpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ3RybCtBbHQrSSouCgpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkN0cmwrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4KClRoZSBwcmV2aWV3IHNob3dzIHlvdSBhIHJlbmRlcmVkIEhUTUwgY29weSBvZiB0aGUgY29udGVudHMgb2YgdGhlIGVkaXRvci4gQ29uc2VxdWVudGx5LCB1bmxpa2UgKktuaXQqLCAqUHJldmlldyogZG9lcyBub3QgcnVuIGFueSBSIGNvZGUgY2h1bmtzLiBJbnN0ZWFkLCB0aGUgb3V0cHV0IG9mIHRoZSBjaHVuayB3aGVuIGl0IHdhcyBsYXN0IHJ1biBpbiB0aGUgZWRpdG9yIGlzIGRpc3BsYXllZC4K</div>
 
 
 
