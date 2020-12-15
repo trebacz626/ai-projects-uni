@@ -104,11 +104,6 @@ task7()
 task8 = function(){
   n = 3
   p = 0.2
-  #binomial
-  v=c()
-  for(i in 0:n){
-    v=c(v,dbinom(i,n,p))
-  }
   table = data.frame(c(0:3),c(16*15*14/20/19/18, 16*15*4/20/19/18*3, 16*4*3/20/19/18*3,4*3*2/20/19/18))
   print(table)
   eX = sum(table[,1]*table[,2])
