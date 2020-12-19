@@ -111,66 +111,94 @@ mytest(mean(depth),870,sigma, length(depth), alpha,"l",TRUE,TRUE)
 #alpha not bigger than p value so we can reject
 ```
 
+Ex.5.
 ```{r}
-#For case when distribution is onknown we just need to pass sd(data) to sig variable
-mytest = function(avg,m0,sig,n,alpha, type, IS_NORMAL, IS_TRUE_SIGMA){
-  print("eee")
-  if(IS_NORMAL & !IS_TRUE_SIGMA ){
-    t = (avg-m0)/(sig/sqrt(n))
-    kw = qt(1-alpha, n-1)
-    kw2 = qt(1-alpha/2,n-1)
-    
-    if(type=="l"){
-      print(paste("p value:", round(pt(t,n-1),3)))
-      if( t < -kw){
-        print("Reject H0")
-      }else{
-        print("No reason for H0 rejection")
-      }
-    }else if(type =="g"){
-      print(paste("p value:", round(1-pt(t,n-1),3)))
-      if( t > kw){
-        print("Reject H0")
-      }else{
-        print("No reason for H0 rejection")
-      }
-    }else if(type =="e"){
-      print(paste("p value:", round(2*pt(-abs(t),n-1),3)))
-      if( (t > kw2)| t < - kw2){
-        print("Reject H0")
-      }else{
-        print("No reason for H0 rejection")
-      }
-    }
-  }else{
-    z = (avg-m0)/(sig/sqrt(n))
-    kw = qnorm(1-alpha)
-    kw2 = qnorm(1-alpha/2)
-    
-    if(type=="l"){
-      print(paste("p value:", round(pnorm(z),3)))
-      if( z < -kw){
-        print("Reject H0")
-      }else{
-        print("No reason for H0 rejection")
-      }
-    }else if(type =="g"){
-      print(paste("p value:", round(1-pnorm(t),3)))
-      if( z > kw){
-        print("Reject H0")
-      }else{
-        print("No reason for H0 rejection")
-      }
-    }else if(type == "e"){
-      print(paste("p value:", round(2*pnorm(-abs(t)),3)))
-      if( (z > kw2)| z < - kw2){
-        print("Reject H0")
-      }else{
-        print("No reason for H0 rejection")
-      }
-    }
-  }
-}
+#Ho mu >= 0.04
+#H1 mu < 0.04
+
+plates = c(na.omit(data$thickness))
+
+m = mean(plates)
+mu_0 = 0.04
+n = length(plates)
+sig = sd(plates)
+
+a = 0.05
+zsum.test(m,sig, n, alternative = "less", mu = mu_0)
+#alpha > p_value so we reject H0
+#on significnce level 5% data confirms that mean of thickness of all plates is smaller than 0.04
+```
+Ex.6.
+```{r}
+length = c(na.omit(data$length))
+m = mean(length)
+mu = 16
+sig = 3
+a = 0.05 # default
+#a
+#H0 mean length of cuckoos egs = 21mm (mu=21)
+#h1 mean length of cuckoos egs != 21mm (mu!=21)
+t.test(length, mu = mu, alternative = "two.sided")
+
+#p_value < alpha reject H0
+#on significance level 5% the dara confirms that the mean length of a cuckoos eggs is different than wren's eggs
+
+#b
+#H0 sd of length of cuckoos egs = 3
+#h1 sd of length of cuckoos egs != 3
+sigma.test(length, sigma = sig, alternative="two.sided")
+# there is no reason to reject H0
+# The data does not confirm that they are different
+
+
+
+zsum.test(length, sig)$conf.int
+```
+
+
+
+
+Ex.7.
+```{r}
+fat = c(na.omit(data$fat))
+m = mean(fat)
+s = sd(fat)
+n = length(fat)
+mu_0 = 1.7
+alpha=0.05
+#a)
+#H0 mean fat content in milk == 1.7% (mu = 1.7)
+#H1 mean fat content in milk != 1.7% ( mu!= 1.7)
+
+t.test(fat, alternative = "two.sided", mu=mu_0)
+#No reason to reject H0
+#On significance level 5% data does not confirm H1 hypothesis, which means that data did not confirm that fat content in milk is different than 1.7
+
+#b)
+#H0 variance of fat content in milk>= 0.02%^2
+#H1 varianceof fat content in milk < 0.02%^2
+
+sigma.test(fat, sigmasq = 0.02, alternative="less")
+
+# pvalue is bigger than alpha
+# no reason to reject H0
+# on significance level 5%, based on data there is no reson to reject H0
+```
+
+Ex.11.
+
+```{r}
+#Ho less than 15% of bottles are contaminated
+#H1 more than 15% of bottles
+
+n = 91
+T = 16
+a=0.1
+
+binom.test(T,n, p=0.15, alternative="greater")
+
+#no reason to reject H0
+# we should not throw away all bottles
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
