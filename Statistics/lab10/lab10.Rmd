@@ -1,0 +1,122 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+data = read.csv(file = "data_twoPop.csv", sep = ";")
+```
+
+
+```{r}
+v1 = na.omit(data$cellulose1)
+v2 = na.omit(data$cellulose2)
+
+#hypothesis H0: varince is equal 
+# H1 variance is not equal
+
+res = var.test(v1, v2)
+res
+a = 0.02
+# p value > 0.02
+# variance are equal
+
+#Ho means are qual mu1 == mu2
+#H1 means are not equal mu1 != mu2
+t.test(v1, v2, var.equal = TRUE)
+# p < a
+# from 
+
+t.test(v1, v2, var.equal = TRUE, conf.level = 1-a)
+#we are 98% sure that the mean difference of cellulose content in wood from two regions of Poland is between -13.52 and 3.14
+```
+Ex.3.
+```{r}
+priv = na.omit(data$private)
+pub = na.omit(data$public)
+
+#Ho variances are equal
+#H1 variance are not equal 
+a=0.1
+var.test(priv, pub, alternative = "two.sided")
+# p_value < a
+
+#H0 pub >= priv
+#H1 pub < priv
+
+t.test(pub, priv, var.equal = FALSE, alternative = "less")
+
+#it is reasonable to expect the lones from public sources to be smaller (in avg) than the loans from private
+
+```
+Ex.4.
+```{r}
+# Task 4
+player1 = na.omit(data$player1)
+player2 = na.omit(data$player2)
+a=0.05
+#Ho variance sigma1^2 >= sigma2^2
+# H1 sigma1^2 < sigma2^2
+
+var.test(player1, player2, alternative = "less")
+```
+
+
+Ex.6.
+```{r}
+#a
+polishN = 1200
+polishT = 1200*0.78
+
+usaN = 2000
+usaT = 2000 *0.8
+
+polishT;usaT
+prop.test(c(polishT, usaT), c(polishN,usaN), conf.level = 1- 0.1)
+# 90 confdence that difference between -4.5 to 0.5%
+
+
+#Ho Pp >= pA
+#H1 pP < pS
+
+alpha = 0.1
+prop.test(c(polishT, usaT), c(polishN,usaN),alternative = "less")
+#p value is smaller than alpha => reject h0
+# on s level data confirms H1 hypothesis
+
+#c
+#H0 polishP <=0.75
+#H1 polishP > 0.75
+
+alpha = 0.1
+binom.test(polishT, polishN, p =0.75, alternative = "greater")
+# on sig level 10% data confirms that the percentafe of satisfier poles is greater than 75%
+```
+Ex.10
+```{r}
+pH15 = c(na.omit(data$pH15))
+pH100 = c(na.omit(data$pH100))
+
+difference = pH100 - pH15
+difference
+
+#H0 mean difference in PH level is equal 2 0 
+#H! there is a difference in mean PH levels
+#assume normality
+alpha = 0.01
+t.test(difference, mu = 0, alternative = "two.sided")
+
+#p_value > alpha so there is no reason to reject H0
+# The data does not confirm that the PH level depends on depth
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
