@@ -1,0 +1,116 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+#Ex1
+data = read.csv('Anova_pressure.csv', sep=";")
+#data
+#k= 4 treatments
+k=4
+#n1=10;n2=10;n3=10;n4=10
+n=40
+samples = 10
+alpha = 0.05
+#H0 mi1=mi2=mi3=mi4
+#H1 ~H0
+
+#should be normal
+low = data$Niskie
+moderate = data$Srednie
+strong = data$Silne
+veryStrong = data$BardzoSilne
+
+treatments = rep(names(data), each = samples)
+
+results = c(low,moderate,strong,veryStrong)
+df = data.frame(treatments, results)
+df
+
+#H0 sig1=sig2=sig3=sig4
+#H1 ~H0
+
+bartlett.test(results~treatments)
+# pvalue higher than alpha so we cannot jest H0
+
+model=lm(results~treatments) 
+anova(model) 
+#do not reject H0
+#the preassure has no effect on final product
+
+```
+```{r}
+micro_data = read.csv("Anova_micrometer.csv", sep=';', dec = ',')
+
+m1 = na.omit(micro_data$mikrometrI)
+m2 = na.omit(micro_data$mikrometrII)
+m3 = na.omit(micro_data$mikrometrIII)
+
+treatments = rep(names(micro_data), c(4,6,5));
+
+
+results = c(m1,m2,m3)
+df = data.frame(treatments, results)
+df
+
+#H0 sig1=sig2=sig3=sig4
+#H1 ~H0
+
+bartlett.test(results~treatments)
+
+#there is no reason to reject H0 so we can perform ANOVA
+
+#H0 mu1=mu2=mu3
+#H1 not H0
+
+model=lm(results~treatments) 
+anova(model) 
+
+#There is no reason to reject H0, so the choice of the micrometer (does not matter)/ (does not have any effect on final result)
+
+```
+```{r}
+trap_data = read.csv("Anova_traps.csv", sep=";")
+trap_data
+samples = 5
+
+treatments = rep(names(trap_data), each = 5)
+
+results = c(trap_data$scattered, trap_data$concentrated, trap_data$host.plant, trap_data$aerial, trap_data$ground)
+
+df = data.frame(treatments, results)
+df
+
+#H0 sig1=sig2=sig3=sig4
+#H1 ~H0
+
+bartlett.test(results~treatments)
+
+#there is no reason to reject H0 so we can perform ANOVA
+
+#H0 mu1=mu2=mu3
+#H1 not H0
+
+model=lm(results~treatments) 
+anova(model) 
+
+#p_val < alpha so we reject H0
+
+#plot(TukeyHSD(aov(results~treatments), ordered=TRUE))
+
+a1 = anova(model)
+"here"
+a1$`Mean Sq`[2]
+a1$`Sum Sq`
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
