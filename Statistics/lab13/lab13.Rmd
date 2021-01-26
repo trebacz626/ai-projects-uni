@@ -1,0 +1,148 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+Ex.1.
+```{r}
+expected = c(0.38, 0.32, 0.23, 0.07)
+observed = c(122, 85, 76, 17)
+
+alpha = 0.1
+
+#H0 observed values have distribution as expected
+#H1 not
+
+chisq.test(observed, p=expected)
+
+#P_value > alpha
+#no reason to reject H0
+```
+
+
+Ex.2.
+```{r}
+other = c(0.74, 0.16, 0.1)#expected
+her = c(68, 27, 5)#observed
+
+dataFrame = data.frame(other, her)
+
+# H0 the percentage levels are equal
+# H1 the percentage levels are different
+
+chisq.test(her, p=other)
+
+# p_value < alpha
+#reject H0
+# percentages are different
+
+```
+
+Ex.3.
+```{r}
+expected = c(0.2, 0.2, 0.2, 0.2, 0.2)
+observed = c(43, 50, 44, 44, 52)
+
+# H0 m&ms are equally distributed
+# H1 m&ms are not equally distributed
+
+alpha = 0.05
+
+#p_value > alpha so we do not reject H0
+# on significance level 
+
+chisq.test(observed, p=expected)
+```
+
+Ex.4.
+```{r}
+data = rep(c(1,3,5,7,9,11), c(7,19,31, 17, 3, 1))
+m = mean(data)
+s = var(data)
+probs = c(pnorm(2,m,s),pnorm(4,m,s) - pnorm(2,m,s), pnorm(6,m,s) - pnorm(4,m,s), pnorm(8,m,s) - pnorm(6,m,s), pnorm(10,m,s) - pnorm(8,m,s), pnorm(Inf,m,s) - pnorm(10,m,s))
+data = c(1*7,19*3,31*5, 7*17, 9*3, 11*1)
+data = data/sum(data)
+
+alpha = 0.05
+
+chisq.test(data, p =probs)
+```
+
+Ex.5.
+```{r}
+
+```
+
+
+Ex.7.
+```{r}
+
+urban = c(15, 12, 8 )
+suburban = c(8, 15, 9)
+rural = c(6,8,7)
+
+df = data.frame(urban, suburban, rural)
+
+# H0 Education has no influence on living location
+# h1 Education has an inlfluence on place of living
+alpha = 0.05
+chisq.test(df)
+
+#p_value > alpha 
+# on significance level 5% data does not confirm that the education has no influence on place of living
+
+```
+
+Ex.8.
+```{r}
+a1 = c(10,90)
+a2 = c(7, 93)
+a3 = c(4, 96)
+
+dataFrame = data.frame(a1,a2,a3)
+# H0 the proportion is the same
+# H1 the proportion is different
+
+chisq.test(dataFrame)
+
+#P_value > alpha
+
+#V2
+
+yes = c(10, 7, 4)
+no = c(90, 93, 96)
+dataFrame = data.frame(yes,no)
+
+chisq.test(dataFrame)
+```
+
+
+Ex.9.
+```{r}
+forit = c(96,96,90,36)
+against = c(201, 189, 195, 234)
+noknow = c(3, 15, 15, 30)
+
+dataFrame = data.frame(forit, against, noknow)
+
+
+# H0 opinion does not depent on age
+# H1 opinion depends on age
+
+alpha = 0.05
+
+chisq.test(dataFrame)
+#p_value < alpha so we can reject H0
+# On significance level 5% data confirms that opinion depends on age
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
