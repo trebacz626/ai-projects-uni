@@ -1,0 +1,656 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+L8-9
+```{r}
+hip_data = read.csv("data_hip.csv", sep=";")
+```
+Ex.1.
+```{r}
+wind = c(na.omit(hip_data$wind))
+wind
+mu0 = 4
+alpha = 0.05
+
+#H0 average strength of wind is smaleer or equal to 4m/sec
+#H1 average strength of wind is greater than 4m/sec
+
+#case normal, not known sd
+t.test(wind,alternative = "greater", mu= 4)
+
+#p-value < alpha so we can reject H0
+#On significance level of 5% the data confirms that the average strength of wind is above 5%, so building pwoerblant is profitable
+
+```
+Ex.2.
+```{r}
+pumps = c(na.omit(hip_data$COP))
+mu0 = 3.5
+alpha = 0.01
+
+#H0 COP >=3.5
+#1 COP < 3.5
+
+t.test(pumps, alternative = "less", mu = mu0)
+
+#p_value > alpha so there is no reason to reject H0
+#On significance level 1% the data does not confirm that COP is lower than 3.5
+```
+Ex.3.
+```{r}
+temperature = c(na.omit(hip_data$temperature))
+mu0 = 54
+sig = 2
+alpha = 0.01
+
+#H0 the average acivation temperture is 54 degrees
+#H1 the average activation temperature is different than 54 degrees
+
+z.test(temperature, sigma.x=sig, alternative="two.sided", mu = mu0)
+
+#p-value > alpha so there is no reason to reject H0
+# on significance level 1% the data does not contradict the manufacturers claim
+```
+Ex.4.
+```{r}
+depth = c(na.omit(hip_data$depth))
+mu0 = 870
+sig = 5
+alpha = 0.05
+
+#H0 the average depth is 54 870 m
+#H1 the average depth is different than 870m
+
+z.test(depth, sigma.x=sig, alternative="two.sided", mu = mu0)
+
+#p-value > alpha so there is no reason to reject H0
+```
+Ex.5.
+```{r}
+cur_data = c(na.omit(hip_data$thickness))
+mu0 = 0.04
+sig = 5
+alpha = 0.05
+alternative = "less"
+
+#H0 the average thickness > mu0
+#H1 the average thickness < mu0
+
+zsum.test(mean(cur_data), sd(cur_data),length(cur_data), alternative=alternative, mu = mu0)
+
+#p-value < alpha so we reject H0
+```
+```{r}
+cur_data = c(na.omit(hip_data$length))
+mu0 = 16
+sig = 3
+alpha = 0.05
+alternative = "two.sided"
+#a
+#H0 the average length of eggs = 16mm
+#H1 the average length of eggs != 16mm
+
+t.test(cur_data,alternative = alternative, mu= mu0)
+
+#p-value < alpha so we reject H0
+#on significance level 5% the mean value of length of eggs is different than 16mm
+
+#b
+#H0 standard deviation of length of eggs == 3mm
+#H1 standard deviation of length of eggs != 3mm
+
+sigma.test(cur_data, sigma =sig, alternative = alternative)
+#p_value > alpha do nt reject
+#On significance level 5% the estimated standard deviation of population is not different than 3mm
+```
+
+Ex.7.
+```{r}
+cur_data = c(na.omit(hip_data$fat))
+mu0 = 1.7
+alpha = 0.05
+alternative = "two.sided"
+#a
+#H0 the average fat content = 1.7%
+#H1 the average fat content != 1.7%
+
+t.test(cur_data,alternative = alternative, mu= mu0)
+
+#p-value > alpha so we cannot reject H0
+#on significance level 5% the mean value of length of eggs is different than 16mm
+est_var = 0.02
+sigma.test(cur_data, sigma =sqrt(est_var), alternative = alternative)
+
+#p-value > alpha so we cannot reject H0
+```
+Ex.8.
+```{r}
+mu0 = 55
+sig = 18
+alpha = 0.01
+alternative = "greater"
+
+#H0 the average pollution <= mu0
+#H1 the average pollution < mu0
+
+zsum.test(60, 20, 100, alternative=alternative, mu = mu0)
+
+#p-value < alpha so we reject H0
+
+sigma.test( sigma =sig, alternative = alternative)
+
+#TODO
+```
+Ex.9.
+```{r}
+mu0 = 0.1
+n = 1100
+T = 100
+alpha = 0.05
+
+#H0 more than 10% of people erad books
+#H1 less than 10% read books
+
+binom.test(T,n, alternative = "less", p = mu0)
+
+#alpha < p_value
+#No reason to reject H0
+```
+Ex.10.
+```{r}
+n=150
+T=82
+p0=0.4
+alternative = "two.sided"
+alpha = 0.01
+
+#H0 prob of group A == 40%
+#H1 prob of group B != 40%
+
+binom.test(T,n,p0, alternative = alternative)
+#p_value < alpha => reject H0
+```
+Ex.11.
+```{r}
+n = 91
+T = 16
+p0 = 0.15
+alpha = 0.01
+
+#H0 less than 15% of bottle is contaminated
+#H1 more than 15% of bottle is contaminated
+alternative = "greater"
+
+binom.test(T,n,p0,alternative = alternative)
+#p_value > alpha
+#No reason to reject H0
+```
+L10
+```{r}
+two_data = read.csv("data_twoPop.csv", sep=";")
+```
+Ex.1.
+```{r}
+celulose1 = c(na.omit(two_data$cellulose1))
+celulose2 = c(na.omit(two_data$cellulose2))
+alpha = 0.02
+
+#Ho variances are the same
+#h1 variances are different
+
+var.test(celulose1, celulose2)
+#p_value > alpha
+#no reason to reject H0, variance equal
+#normal distribution sample variance => t.test
+
+#Ho variances same
+#h1 variance different
+t.test(celulose1,celulose2, alternative = "two.sided", conf.level = 1-alpha, var.equal = TRUE)
+#p_value> alpha no reason to reject H0, means same
+```
+Ex.2.
+```{r}
+traditional = c(na.omit(two_data$traditional))
+new = c(na.omit(two_data$new))
+
+alpha= 0.1
+
+#H0 variance is equal
+#H1 variance is different
+var.test(traditional, new)
+#p_value > alpha
+#no reason to reject H0, vaiance same
+
+#H0 traditional building time is shorter 
+#H1 traditional building time is longer
+t.test(traditional, new, alternative = "greater", var.equal = TRUE)
+
+#P_value > alpha no reason to reject H0
+```
+Ex.3.
+```{r}
+public = c(na.omit(two_data$public))
+private = c(na.omit(two_data$private))
+
+alpha= 0.1
+
+#H0 variance is equal
+#H1 variance is different
+var.test(public, private)
+#p_value < alpha
+#reject H0, variance not same
+
+#H0 public => private
+#H1 public < private
+
+t.test(public, private, alternative = "less", var.equal = FALSE)
+
+#P_value < alpha reject H0
+```
+
+Ex.4.
+```{r}
+first_player = c(na.omit(two_data$player1))
+second_player = c(na.omit(two_data$player2))
+
+alpha= 0.05
+
+#H0 first >= second
+#H1 first < second
+var.test(first_player, second_player, alternative = "less")
+#p_value > alpha
+# no reason toreject H0
+
+```
+Ex.5.
+```{r}
+before = c(na.omit(two_data$medicine1))
+after = c(na.omit(two_data$medicine2))
+
+alpha= 0.1
+#H0 variance is equal
+#H1 variance is different
+var.test(before, after)
+#p_value > alpha
+#not reject H0, variance same
+
+#H0 before <= after
+#H1 before > after
+
+t.test(before, after, alternative = "greater", var.equal = TRUE)
+
+#P_value < alpha reject H0 first drug works longer
+```
+Ex.6.
+```{r}
+n1 = 1200
+T1 = 1200*0.78
+n2 = 2000
+T2 = 2000*0.8
+alpha = 0.1
+
+prop.test(c(T1,T2),c(n1,n2), conf.level = 1-alpha)
+#confidence interval of difference (-4.52, 5)
+
+#H0 p1>= p2
+#H1 p1<p2
+prop.test(c(T1,T2),c(n1,n2), conf.level = 1-alpha, alternative = "less")
+#p_value < alpha reject H0 p1 smaller than p2
+
+#c
+#H0 p1<=0.75
+#H1 p1> 0.75
+binom.test(T1,n1, 0.75, alternative = "greater")
+#P_value < alpha reject H0 p1>0.75 
+```
+Ex.7.
+```{r}
+firstT = 313
+firstN = 313+28
+
+secondT = 125
+secondN = 145+56
+
+alpha =0.05
+#H0 same
+#H1 different
+
+prop.test(c(firstT, secondT), c(firstN, secondN), alternative = "two.sided", conf.level = 1-alpha)
+#p_value < alpha reject H0 type deppends on region
+
+```
+Ex.8.
+```{r}
+n = 1000
+aT = 47
+bT = 62
+
+alpha = 0.05
+
+#H0 pa >= pb
+#H1 pa< pb
+
+prop.test(c(aT,bT),c(n,n), alternative="less", conf.level = 1-alpha)
+# p_value > alpha not reject H0 select design B
+```
+Ex.9.
+```{r}
+before = c(na.omit(two_data$drugBefore))
+after = c(na.omit(two_data$drugAfter))
+
+alpha= 0.05
+
+difference = before - after
+
+#H0 before == after
+#H1 before != after
+
+t.test(difference, mu=0, alternative = "two.sided")
+
+#P_value > alpha not reject H0 there 
+```
+
+Ex.10.
+```{r}
+d15 = c(na.omit(two_data$pH15))
+d100 = c(na.omit(two_data$pH100))
+
+alpha= 0.01
+
+difference = d15 - d100
+
+print(mean(difference))
+#H0 before == after
+#H1 before != after
+
+t.test(difference, mu=0, alternative = "two.sided")
+
+#P_value > alpha not reject H0 there 
+
+#B) 
+t.test(difference, mu=0, alternative = "two.sided", conf.level = 1-0.9)
+
+#mean in confidence interval => no reason to reject H0
+```
+L11
+
+Ex.1.
+```{r}
+data = read.csv("Anova_pressure.csv", sep=";")
+
+low = data$Niskie
+moderate = data$Srednie
+strong = data$Silne
+high = data$BardzoSilne
+
+k=4
+samples = length(low)
+n = k*samples
+
+treatments = rep(names(data), each = samples)
+
+results = c(low,moderate,strong, high)
+
+alpha = 0.05
+
+#H0 variances are same
+#H1 variances are different
+
+bartlett.test(results~treatments)
+#P_value > alpha not reject H0
+#bartlett.test(data)
+
+#H0 all means equal
+#H1 at least one mean is different
+
+model = lm(results~treatments)
+anova(model)
+
+#P_value > alpha
+#No reason to reject H0
+#the preassure has no effect on final product
+```
+
+Ex.2.
+```{r}
+data = read.csv("Anova_oil.csv", sep=";")
+
+names(data)
+
+treatments = rep(names(data), each=8)
+
+results = c(data$Explosive.fracture, data$Water.injection, data$Steam.injection, data$Controlled.pumping)
+
+alpha = 0.05
+
+#H0 variances are same
+#H1 variances are different
+
+bartlett.test(results~treatments)
+#P_value > alpha not reject H0
+
+#H0 all means equal
+#H1 at least one mean is different
+
+model = lm(results~treatments)
+anova(model)
+
+#P_value > alpha
+#No reason to reject H0
+#no threatment is better than others
+```
+
+Ex.3.
+```{r}
+data = read.csv("Anova_micrometer.csv", sep=";", dec = ",")
+
+data$mikrometrI
+#names(data)
+
+treatments = rep(names(data), c(4,6,5))
+treatments
+results = c(na.omit(data$mikrometrI), na.omit(data$mikrometrII), na.omit(data$mikrometrIII))
+results
+alpha = 0.05
+
+#H0 variances are same
+#H1 variances are different
+
+bartlett.test(results~treatments)
+#P_value > alpha not reject H0
+
+#H0 all means equal
+#H1 at least one mean is different
+
+model = lm(results~treatments)
+anova(model)
+
+#P_value > alpha
+
+#no reason to reject H0, the choice of micromenter does not have an influence on mesurement
+```
+Ex.4.
+```{r}
+data = read.csv("Anova_traps.csv", sep=";")
+
+
+
+treatments = rep(names(data), each=5)
+
+results = c(na.omit(data$scattered),na.omit(data$concentrated), na.omit(data$host.plant), na.omit(data$aerial), na.omit(data$ground))
+
+alpha = 0.05
+
+#H0 variances are same
+#H1 variances are different
+
+bartlett.test(results~treatments)
+#P_value > alpha not reject H0
+
+#H0 all means equal
+#H1 at least one mean is different
+
+model = lm(results~treatments)
+anova(model)
+
+#P_value < alpha
+
+#at least one mean is different
+
+#b
+TukeyHSD(aov(results~treatments), ordered=TRUE, conf.level = 1-alpha)
+
+```
+
+Ex.5.
+```{r}
+data = read.csv("Anova_sportsmen.csv", sep=";")
+
+
+names(data)
+treatments = rep(names(data), each=6)
+
+results = c(na.omit(data$NonSmokers),na.omit(data$LightSmokers), na.omit(data$MediumSmokers), na.omit(data$HeavySmokers))
+
+alpha = 0.05
+
+#H0 variances are same
+#H1 variances are different
+
+bartlett.test(results~treatments)
+#P_value > alpha not reject H0
+
+#H0 all means equal
+#H1 at least one mean is different
+
+model = lm(results~treatments)
+anova(model)
+
+#P_value < alpha
+
+#at least one mean is different
+
+#b
+TukeyHSD(aov(results~treatments), ordered=TRUE, conf.level = 1-alpha)
+```
+
+L12
+Ex.1.
+```{r}
+data = c(na.omit(read.csv("Reg_1_materials_yield.csv", sep=";")))
+#a
+X = data$X
+Y = data$Y
+
+cov(X,Y)
+#b
+cor(X,Y)
+
+#c
+plot(X,Y)
+
+#d
+linear_model = lm(Y~X)
+
+b0 = linear_model$coefficients[1]
+b1 = linear_model$coefficients[2]
+b0;b1
+
+#fg
+predict(linear_model,data.frame(X=c(15,20)))
+
+#h
+cor(X,Y)^2
+#very good
+summary(linear_model)
+
+anova(linear_model)
+```
+Ex.2.
+```{r}
+data = c(na.omit(read.csv("Reg_2_arsenic.csv", sep=";", dec=".")))
+#a
+X = data$pH
+Y = data$arsenic
+Y
+X
+
+cov(X,Y)
+#b
+cor(X,Y)
+
+#c
+plot(X,Y)
+
+#d
+linear_model = lm(Y~X)
+
+b0 = linear_model$coefficients[1]
+b1 = linear_model$coefficients[2]
+b0;b1
+
+#fg
+predict(linear_model,data.frame(X=c(7.5,9)))
+
+#h
+cor(X,Y)^2
+#very good
+summary(linear_model)
+
+anova(linear_model)
+#alpha = 0.01
+#p_value < alpha
+#reject H0
+```
+Ex.3.
+```{r}
+data = c(na.omit(read.csv("Reg_3_bricks.csv", sep=";", dec=".")))
+#a
+X = data$Air
+Y = data$Dry
+
+cov(X,Y)
+#b
+cor(X,Y)
+
+#c
+plot(X,Y)
+
+#d
+linear_model = lm(Y~X)
+
+b0 = linear_model$coefficients[1]
+b1 = linear_model$coefficients[2]
+b0;b1
+
+#fg
+predict(linear_model,data.frame(X=c(11,23)))
+
+#h
+cor(X,Y)^2
+#very good
+summary(linear_model)
+
+anova(linear_model)
+#alpha = 0.01
+#p_value < alpha
+#reject H0
+
+#p_value < alpha
+# reject H0
+```
+Ex.4.
+```{r}
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
