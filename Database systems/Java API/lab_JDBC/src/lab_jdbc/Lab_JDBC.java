@@ -282,34 +282,5 @@ public class Lab_JDBC {
         }
     }
 
-    
-//    CREATE OR REPLACE FUNCTION CASE_CHANGE_EMPLOYEE 
-//(
-//  INPUTID IN NUMBER 
-//, OUTPUTNAME OUT VARCHAR2 
-//) RETURN NUMBER
-//IS
-//    TEMP NUMBER := 0;
-//BEGIN
-//    select COUNT(*), surname into TEMP, OUTPUTNAME from employees where emp_id = INPUTID;
-//    IF (TEMP != 0) THEN
-//        RETURN 0;
-//    ELSE
-//        UPDATE EMPLOYEES SET SURNAME = UPPER(LEFT(OUTPUTNAME,1))+LOWER(SUBSTRING(OUTPUTNAME,2,LEN(OUTPUTNAME))) where emp_id = inputid;
-//        select surname into OUTPUTNAME from employees where emp_id = INPUTID;
-//        RETURN 1;
-//    END IF;
-//END CASE_CHANGE_EMPLOYEE;
-    static void task7(Connection conn) {
-        try ( CallableStatement stmt = conn.prepareCall("{call InsertDepartment(?,?,?)}");) {
-            stmt.setInt(1, 60);
-            stmt.setString(2, "NEW DEPARTMENT");
-            stmt.setString(3, "LENSINGTON 3A");
-            stmt.execute();
-            stmt.close();
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
-    }
 
 }
