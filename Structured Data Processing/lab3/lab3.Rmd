@@ -1,0 +1,86 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+
+```
+
+# Exercise 1
+```{r}
+set.seed(123)
+x <- round(rnorm(20,0,1),2)
+x
+#1)
+x[(x>=-2 & x<= -1) | (x>=1 & x<=2)]
+#2)
+length(x[x >=0])
+length(x[x >=0])/length(x)
+
+sum(x>=0)
+mean(x>=0)
+#3)
+mean(abs(x))
+#4)
+x[which.min(abs(x))]
+x[which.max(abs(x))]
+max(abs(x))
+x[abs(x) == max(abs(x))]
+x[abs(x) == min(abs(x))]
+#5)
+x[which.min(abs(x-2))]
+x[which.max(abs(x-2))]
+print("6)")
+(x-min(x))/(max(x)-min(x))
+print("7)")
+y<-ifelse(x>=0,"nieujemna", "ujemna")
+y
+print("8)")
+ifelse(x< -1, "mały",ifelse(abs(x)<=1,"średni", "duży"))
+print("9)")
+plot(x,floor(x)+0.5)
+
+```
+
+# Exercise 7
+```{r}
+
+asin_not_vectorized_primitive = function(x,m){
+  stopifnot(is.numeric(x), length(x) >0, all(abs(x) <1))
+  suma <- 0
+  for(i in 0:m){
+    wyraz <- factorial(2*i)*x^(2*i+1)/(4^i * factorial(i)^2 * (2*i+1))
+    suma <- suma + wyraz
+  }
+}
+
+asin_not_vectorized_primitive(c(1/2,1/3),5)
+
+asin_almost_vectorized = function(x,m){
+  stopifnot(is.numeric(x), length(x) >0, all(abs(x) <1))
+  n = 0:m
+  print(sum((factorial(2*n))/(4^n *factorial(n)^2 * (2*n + 1))*(x^(2*n+1))))
+}
+asin_almost_vectorized(1/2,10)
+
+asin_efficient_vectorized = function(x,m){
+  stopifnot(is.numeric(x), length(x) >0, all(abs(x) <1))
+  # a_0 = x/1 = x
+  n <- 1:m
+  r <- x^2*(2*n-1)^2/(2*n*(2*n+1))
+  sum(cumprod(c(x,r)))
+}
+asin_efficient_vectorized(1/2,1000)
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
