@@ -1,0 +1,71 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+p <- ggplot() + 
+coord_cartesian() +
+scale_x_continuous()+
+scale_y_continuous()+
+scale_color_hue() +
+facet_wrap(~cut) +
+layer(data=diamonds, 
+  mapping=aes(
+      x=carat, 
+      y=price,
+      color=color), 
+  stat="identity", 
+  geom="point", 
+  position=
+   position_jitter()
+)
+
+p + layer(
+ data=diamonds,
+ mapping=aes(
+   x=carat,
+   y=price),
+ stat="smooth",
+ params=list(
+   method="glm",
+   formula=
+     y~poly(x,2),
+   color="black"),
+ geom="smooth",
+ position=
+  position_identity()
+)
+```
+```{r}
+ggplot(
+  mpg, 
+  aes(x=displ, 
+      y=hwy)
+) +
+geom_point() +
+geom_smooth() + 
+facet_grid(. ~ year)
+```
+```{r}
+ggplot(mpg, aes(hwy, fill=drv)) + 
+    geom_density(alpha= 0.4)
+```
+```{r}
+header(diamonds)
+```
+
+
+```{r}
+ggplot(diamonds, aes(x=)) + geom_bar()
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
