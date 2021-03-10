@@ -1,0 +1,15 @@
+>> 2+2
+ans =  4
+>> 2^2 = 2+2
+parse error:
+
+  invalid left hand side of assignment
+
+>>> 2^2 = 2+2
+        ^
+
+>> 2^2 == 2+2
+ans = 1
+>> var1 = ans
+var1 = 1
+>> 

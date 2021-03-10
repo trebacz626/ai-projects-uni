@@ -1,0 +1,49 @@
+>> b = b'
+b =
+
+    1
+    5
+  -13
+
+>> Ab = [A b]
+Ab =
+
+    1.00000    2.00000    3.00000    1.00000
+    2.00000   -1.00000   -8.00000    5.00000
+    0.50000   -9.00000    0.00000  -13.00000
+
+>> rref(Ab)\
+warning: using continuation marker \ outside of double quoted strings is deprecated and will be removed from a future version of Octave, use ... instead
+
+>> rref(Ab)
+ans =
+
+   1.00000   0.00000   0.00000   0.28679
+   0.00000   1.00000   0.00000   1.46038
+   0.00000   0.00000   1.00000  -0.73585
+
+>> resl = tmp(:,end)
+error: invalid use of end
+>> tmp = rref(Ab)
+tmp =
+
+   1.00000   0.00000   0.00000   0.28679
+   0.00000   1.00000   0.00000   1.46038
+   0.00000   0.00000   1.00000  -0.73585
+
+>> resl = tmp(:,end)
+resl =
+
+   0.28679
+   1.46038
+  -0.73585
+
+>> linsolve(A,b)
+ans =
+
+   0.28679
+   1.46038
+  -0.73585
+
+>> plot([0,1,2],[2,3,7])
+>> diary end
