@@ -1,0 +1,34 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(GGally)
+biology = read.csv("Sugars.csv", sep=",")
+#ggpairs(biology[1:3], aes(colour = Base, alpha = 0.4), cardinality_threshold = 432)
+#plot(select(biology, C1..C2., Base, Chi_syn, Sugar, Temperature))
+for( name in c("C1..C2.", "C2..C3.","C3..O3.", "C1..O4.", "C2..O2.","C4..C5.", "C4..O4.","C5..O5.","C1..C2..C3.", "C1..C2..O2.", "C1..O4..C4.", "C2..C1..O4.", "C2..C3..C4.", "C2..C3..O3.", "C3..C2..O2.", "C3..C2..O2.", "C3..C4.", "C3..C4..C5.", "C3..C4..O4.", "C4..C3..O3.", "C4..C5..O5.", "C5..C4..O4.")){
+ #print(ggplot(biology, aes_string(y =name, x="Temperature")) + geom_point() + facet_grid(~Base + Sugar))
+  #print(ggplot(biology, aes_string(name)) + geom_histogram() + facet_grid(~Base + Sugar))
+  #print(ggplot(biology, aes_string("Base",name, fill="Sugar")) + geom_violin(width = 0.5))
+  print(ggplot(biology, aes_string("Base",name, color=name)) + geom_violin(width = 0.5))
+}
+```
+
+
+```{r}
+names(biology)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
