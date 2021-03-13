@@ -46,6 +46,65 @@ print("9)")
 plot(x,floor(x)+0.5)
 
 ```
+# Exercise 2
+```{r}
+pearson_r <- function(x,y){
+  sum((x-mean(x))*(y-mean(y)))/((length(x)-1)*sd(x)*sd(y))
+}
+
+x <- rnorm(20, 0, 1); y <- 10*x+2
+pearson_r(x,y)
+x <- rnorm(20, 0, 1); y <- -4*x+1
+pearson_r(x,y)
+x <- rnorm(2000, 0, 1); y <- rnorm(2000, 5, 2)
+pearson_r(x,y)
+```
+
+# Exercise 3
+```{r}
+spearman_cor <- function(x,y){
+  n = length(x)
+  1 - 6*sum((rank(x)-rank(y))^2)/(n*(n^2-1))
+}
+
+spearman_cor(x,y)
+```
+# Exercise 4
+```{r}
+k_winsor <-function(x,k){
+  n = length(x)
+  x =sort(x)
+  mean(c(rep(x[k+1],k),x[(k+1):(n-k)],rep(x[n-k],k) ))
+}
+k_winsor(sample.int(10,10),0)
+```
+
+# Exercise 5
+```{r}
+my_gini <-function(y){
+  n = length(y)
+  i = 1:n
+  sum((2*i - n - 1)*y)/(n*(n-1)*mean(y))
+}
+my_gini(rpois(1000, 1))
+my_gini(rnorm(1000))
+my_gini(rchisq(1000,1))
+```
+
+# Exercise 6
+```{r}
+factorial2 <- function(n){
+  prod(1:n)
+}
+
+factorial_stirling <- function(n){
+  sqrt(2*pi*n)*(n/exp(1))^n
+}
+for(n in c(5,10,15)){
+  print(abs(factorial2(n) - factorial_stirling(n)))
+}
+```
+
 
 # Exercise 7
 ```{r}
@@ -78,6 +137,33 @@ asin_efficient_vectorized = function(x,m){
 asin_efficient_vectorized(1/2,1000)
 ```
 
+# Exercise 8
+```{r}
+hirsch_index <- function(x){
+  x = rev(sort(x))
+  i = 1:length(x)
+  floor(max(i[x>=i]))
+}
+
+x = runif(100,1,1000)
+hirsch_index(c(10,8,5,4,3))
+hirsch_index(x)
+```
+
+
+# Exercise 9
+```{r}
+my_calc <- function(x){
+  top <- c(" _ ","  "," _ "," _ ","   "," _ "," _ "," _ "," _ "," _ ")
+  mid <- c("| |"," |"," _|"," _|","|_|","|_ ","|_ ","  |","|_|","|_|")
+  bot <- c("|_|"," |","|_ "," _|"," | "," _|","|_|","  |","|_|"," _|")
+  print(paste(top[x], sep=" "))
+  print(paste(mid[x], sep=" "))
+  print(paste(bot[x], sep=" "))
+}
+
+my_calc(c(3,4,5))
+```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
