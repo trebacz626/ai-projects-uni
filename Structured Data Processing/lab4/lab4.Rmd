@@ -1,0 +1,161 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+## Exercise 1
+```{r}
+x = c(4,5,5,3,3,774,334,6436,6,56,536,565,65)
+res = rle(x)
+res$values[which.max(res$lengths)]
+```
+## Exercise 2
+```{r}
+calkaMonteCarlo <- function(f,a,b, n){
+  fmin = min(f(a),f(b))
+  fmax = max(f(a),f(b))
+  xs = runif(n,a,b)
+  ys = runif(n,fmin,fmax)
+  (sum(ys<=f(xs))/n)*abs(b-a)*(f(b)-f(a)) + (b-a)*fmin
+}
+
+calkaMonteCarlo(exp,0,1, 1000)
+```
+## Exercise 3
+```{r}
+sample <- function(x,k){
+  n = length(x)
+  x[floor(runif(k)*(n)+1)]
+}
+sum(sample(c(1,2,3,4,5),100000))/100000
+```
+## Exerxise 4
+```{r}
+my_unique <- function(x){
+  rle(x)&values
+}
+```
+
+## Exercise 5
+```{r}
+my_intersect <- function(x,y){
+  tab_x = tabulate(x)
+  tab_y = tabulate(y)
+  min_l = min(length(tab_x), length(tab_y))
+  which(tabulate(x)[1:min_l] & tabulate(y)[1:min_l])
+}
+
+x = sample.int(30,10)
+y = sample.int(30,10)
+my_intersect(x,y)
+```
+
+## Exercise 6
+```{r}
+
+ex_6_myf <- function(x,y){
+  sapply(y, function(yk){
+    length(x[x <= yk])
+  })/length(x)
+}
+
+x = c(1,2,3,4,5,6, 2, 3, 9)
+y = c(1,2,3,4,5,6, 7, 8, 1)
+ex_6_myf(x,y)
+```
+## Exercise 7
+```{r}
+merge_string_list <- function(lst, sep = ''){
+  #return(paste(lst[[1]], sep=sep))
+  paste(sapply(lst, function(l){
+    paste(l, collapse =sep)  
+  }), collapse =sep)
+  
+}
+lst = list(c("aaa", "bbb"), c("ccc","ddd"))
+merge_string_list(lst)
+```
+
+## Exercise 8
+```{r}
+sortedPoints <- function(m,n,x){
+  #stopifnot(length(x) == m*n)
+  #indexer = 1:(m*n)
+  #mw = 1:m
+  
+  #lapply(1:m,function(i) x[(indexer -1 + i)%%(m+i-1) == 0]^2)
+  i <- 1:m
+  numery <- rep(i,n)
+  print(numery)
+  punkty <- split(x,rep(i,n))
+  print(punkty)
+  o <- order(sapply(punkty, function(x) sum(x**2)))
+  print(o)
+  unsplit(punkty[o], numery)
+}
+
+sortedPoints(2,3,c(1,2,3,4,5,6))
+
+nm <- 1:6
+n <- 2
+m <- 3
+
+```
+
+## Exercise 9
+```{r}
+approxinvert <- function(f, a, b, k = 100){
+  #TODO
+}
+```
+
+## Exercise 10
+```{r}
+wystarczy <- function(list, r, R, fun){
+  res = sapply(list, fun)
+  list[r<= res & R>=res]
+}
+
+wystarczy(list(c(6, 3, 10), c(5, 10, 15), 4), 20, 30, sum)
+```
+
+#Exercise 11
+```{r}
+distance <- function(p, a, b){
+  abs(sum(a * p) + b)/sqrt(sum(a*a))
+}
+
+distance(c(2, -2, 0.5), c(2, 1, 4), b = -4)
+distance(c(0, 0), c(1, 1), b = -2.0)
+```
+
+
+## Exercise 12
+```{r}
+
+gendyskr <- function(n, x, p){
+  
+  stopifnot(is.numeric(n), length(n) == 1, is.numeric(x), is.numeric(p), length(x) >0, length(x) == length(p), all(p >= 0))
+  stopifnot(length(unique(x)) == length(x))
+  if(abs(sum(p) - 1) >1e-12){
+    print("Values of probability not summing to 1")
+    p = p/sum(p)
+  }
+  pc <- cumsum(p)
+  u <- runif(n)
+  
+  m <- sapply(X = u, FUN = function(ui,pstwa) which.max(pstwa >= ui), pstwa=pc)
+  x[m]
+}
+n = 5
+table(gendyskr(10000,1:n, rep(1/n,n)))
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
