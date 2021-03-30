@@ -1,0 +1,160 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+## Exercise 1
+```{r}
+library("nycflights13")
+library("sqldf")
+library("dplyr")
+library("compare")
+?planes
+airports <- as.data.frame(airports)
+flights <- as.data.frame(flights)
+planes <- as.data.frame(planes)
+weather <- as.data.frame(weather)
+airlines <- as.data.frame(airlines)
+```
+## Examples
+```{r}
+res_sql <- sqldf("SELECT name FROM airlines")
+
+res_r = airlines['name']
+
+all(res_r == res_sql)
+
+dplyr::all_equal(res_r, res_sql)
+
+compare::compare(res_sql, res_r, allowAll = TRUE)
+
+res_r2 <- structure(
+  airlines['name'],
+  class = "data.frame",
+  row.names = letters[1:nrow(airlines)]
+)
+
+compare::compare(res_sql, res_r2, allowAll = TRUE)
+```
+
+## Exercise 2
+```{r}
+#a
+res_a_sql <- sqldf("SELECT DISTINCT engine FROM planes")
+res_a_r <- data.frame(unique(planes['engine']))
+compare(res_a_sql, res_a_r, allowAll = TRUE)
+
+#b
+res_b_sql <- sqldf("SELECT DISTINCT type, manufacturer FROM planes")
+res_b_r <- unique(planes[c('type','manufacturer')])
+#row.names(res_b_r) <- NULL
+compare(res_b_sql, res_b_r, allowAll = TRUE)
+
+#c
+res_c_sql <- sqldf("SELECT COUNT(*), engine FROM planes GROUP BY engine")
+res_c_r <-as.data.frame(table(planes$engine), stringsAsFactors = FALSE)
+colnames(res_c_r) <- c("engine","count(*)")
+compare(res_c_sql, res_c_r, allowAll = TRUE)
+
+#res_c_r2 <- sapply(split(planes$engine), length)
+#res_c_r2 <- data.frame(engine = names(y), count = y)
+#row.names(res_c_r2) <- NULL
+
+res_c_r3 <- aggregate(x = planes$engine,
+                      by = planes['engine'],
+                      FUN = length)
+colnames(res_c_r3)[2] <- "count"
+#d
+#TODO
+res_d_sql <- sqldf("SELECT COUNT(*), engine, type FROM planes
+GROUP BY engine, type")
+res_d_r <- as.data.frame(table(planes$engine, planes$type))
+
+res_d_r2 <- aggregate(x = planes$engine,
+                      by = planes[c("engine", "type")],
+                      FUN = length)
+colnames(res_d_r2)[3] <- "count(*)"
+
+compare(res_d_sql, res_d_r2, allowAll = TRUE)
+
+#e
+res_e_sql <- sqldf("SELECT MIN(year) as year_min, AVG(year) as year_avg, MAX(year) as year_max, engine, manufacturer FROM planes
+GROUP BY engine, manufacturer")
+res_e_r <- aggregate(x = planes['year'],
+                      by = planes[c("engine", "manufacturer")],
+                      FUN = function(z){
+                        c(min(z, na.rm = TRUE), mean(z, na.rm = TRUE), max(z, na.rm = TRUE))
+                      })
+res_e_r <- cbind(res_e_r[,3], res_e_r[,1:2])
+res_e_r
+
+res_e_r[is.nan(res_e_r$year_min) | is.nan(res_e_r$year_min), 'year_min'] <- NA
+res_e_r[is.nan(res_e_r$year_max) | is.nan(res_e_r$year_max), 'year_max'] <- NA
+res_e_r[is.nan(res_e_r$year_avg) | is.nan(res_e_r$year_avg), 'year_avg'] <- NA
+
+compare(res_e_sql, res_e_r, allowAll = TRUE)
+```
+
+## Exercise 3
+```{r}
+sqldf("SELECT * FROM planes WHERE speed IS NOT NULL")
+sqldf("SELECT tailnum FROM planes WHERE seats BETWEEN 150 AND 190 AND year >= 2012")
+sqldf('SELECT * FROM planes WHERE manufacturer IN ("BOEING", "AIRBUS", "EMBRAER")
+AND seats>390')
+sqldf("SELECT DISTINCT year, seats FROM planes WHERE year >= 2012
+ORDER BY year ASC, seats DESC")
+sqldf("SELECT DISTINCT year, seats FROM planes WHERE year >= 2012
+ORDER BY seats DESC, year ASC")
+```
+
+## Exercise 4
+```{r}
+sqldf('SELECT manufacturer, COUNT(*) FROM planes WHERE seats > 200
+GROUP BY manufacturer')
+sqldf('SELECT manufacturer, COUNT(*) FROM planes
+GROUP BY manufacturer HAVING COUNT(*) > 10')
+sqldf('SELECT manufacturer, COUNT(*) FROM planes WHERE seats > 200
+GROUP BY manufacturer HAVING COUNT(*) > 10')
+sqldf('SELECT manufacturer, COUNT(*) AS howmany FROM planes
+GROUP BY manufacturer ORDER BY howmany DESC LIMIT 5')
+```
+
+## Exercies 5
+```{r}
+sqldf('SELECT * FROM flights LEFT JOIN planes ON flights.tailnum=planes.tailnum')
+sqldf('SELECT planes.*, airlines.* FROM
+(SELECT DISTINCT carrier, tailnum FROM flights) AS cartail
+INNER JOIN planes ON cartail.tailnum=planes.tailnum
+INNER JOIN airlines ON cartail.carrier=airlines.carrier')
+sqldf("SELECT flights2.*, weather2.atemp, weather2.ahumid, weather2.apressure FROM
+(SELECT * FROM flights WHERE origin='EWR') AS flights2
+LEFT JOIN
+(SELECT year, month, day, AVG(temp) AS atemp,
+AVG(humid) AS ahumid, AVG(pressure) AS apressure
+FROM weather WHERE origin='EWR' GROUP BY year, month, day) AS weather2
+ON flights2.year=weather2.year
+AND flights2.month=weather2.month
+AND flights2.day=weather2.day")
+```
+
+## Exercise 6
+```{r}
+sqldf('SELECT * FROM A UNION SELECT * FROM B')
+sqldf('SELECT * FROM A UNION ALL SELECT * FROM B')
+sqldf('SELECT * FROM A INTERSECT SELECT * FROM B')
+sqldf('SELECT * FROM A EXCEPT SELECT * FROM B')
+sqldf('SELECT * FROM B EXCEPT SELECT * FROM A')
+```
+```{r}
+R.Version()
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
