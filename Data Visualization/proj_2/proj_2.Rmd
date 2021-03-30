@@ -12,19 +12,51 @@ library(dplyr)
 library(ggplot2)
 library(GGally)
 biology = read.csv("Sugars.csv", sep=",")
-#ggpairs(biology[1:3], aes(colour = Base, alpha = 0.4), cardinality_threshold = 432)
-#plot(select(biology, C1..C2., Base, Chi_syn, Sugar, Temperature))
+
 for( name in c("C1..C2.", "C2..C3.","C3..O3.", "C1..O4.", "C2..O2.","C4..C5.", "C4..O4.","C5..O5.","C1..C2..C3.", "C1..C2..O2.", "C1..O4..C4.", "C2..C1..O4.", "C2..C3..C4.", "C2..C3..O3.", "C3..C2..O2.", "C3..C2..O2.", "C3..C4.", "C3..C4..C5.", "C3..C4..O4.", "C4..C3..O3.", "C4..C5..O5.", "C5..C4..O4.")){
- #print(ggplot(biology, aes_string(y =name, x="Temperature")) + geom_point() + facet_grid(~Base + Sugar))
-  #print(ggplot(biology, aes_string(name)) + geom_histogram() + facet_grid(~Base + Sugar))
-  #print(ggplot(biology, aes_string("Base",name, fill="Sugar")) + geom_violin(width = 0.5))
-  print(ggplot(biology, aes_string("Base",name, color=name)) + geom_violin(width = 0.5))
+  print(ggplot(biology, aes_string("Base",name, color=name)) + geom_violin(width = 0.5) )
 }
+```
+
+```{r}
+name = "C1..C2..C3."
+#ggplot(biology, aes_string(name, color="Sugar")) + geom_histogram(binwidth = 1) +xlim(90,120) + coord_polar(theta = "x", direction = 1, )
+#ggplot(biology, aes_string(name,ifelse(biology$Sugar == "ribose",1,1))) + geom_line(aes(linetype=Sugar),alpha=0.5, size=1) +xlim(90,130) +ylim(0,2) + coord_polar(theta = "x", direction = -1, start = -pi/2)
+
+ggplot(biology, aes_string(name,ifelse(biology$Sugar == "ribose",1,2), color="Sugar")) + geom_violin(width=0.5) +xlim(90,120) +ylim(0,2)  #+ coord_polar(theta = "x", direction = -1, start = -pi/2)
+
+#ggplot(biology, aes_string("Sugar", name, color="Sugar")) + geom_violin(width=0.5) +ylim(90,130) + coord_polar(theta = "y", direction = -1, start = -pi/2)
+```
+
+```{r}
+angles = read.csv("Angle.csv", sep=",")
+ggplot(angles, aes(AngleName, Value, fill = AngleName, linetype = Sugar)) + geom_violin(width=2) +ylim(100,120) + coord_polar(theta = "y", direction = -1, start = -pi/2) + theme_minimal() +ylab("Bond angle [°]") + xlab("Angle Notation") + scale_fill_brewer(type="qual", palette=3)
 ```
 
 
 ```{r}
-names(biology)
+angles5 = read.csv("Angle5.csv", sep=",")
+ggplot(angles5, aes(AngleName, Value, fill = AngleName, linetype = Sugar)) + geom_violin() +ylim(100,120) + coord_polar(theta = "y", direction = -1, start = -pi/2) + theme_minimal() + scale_fill_brewer(type="qual", palette=3) +ylab("Bond angle [°]") + xlab("Angle Notation")
+```
+
+
+```{r}
+angles = read.csv("Angle.csv", sep=",")
+#ggplot(angles, aes(Value, AngleName, fill = Sugar)) + geom_violin(width=1)
+ggplot(angles, aes(Value, AngleName, fill = Sugar)) + geom_boxplot() + xlab("Bond angle [°]") +ylab("Angle notation") + scale_fill_manual(values= c("#9ebcda", "#8856a7"))
+#ggplot(angles, aes(Value, AngleName, linetype = Sugar)) + geom_line() + coord_polar()
+```
+```{r}
+angles5 = read.csv("Angle5.csv", sep=",")
+ggplot(angles5, aes(AngleName, Value, fill = Sugar)) + geom_violin()
+```
+
+
+```{r}
+ggplot(angles, aes(Value, fill = AngleName, linetype = Sugar, alpha=0.5)) + geom_density() + theme_minimal()  + xlim(100,120)+ coord_polar(theta = "x", direction = -1, start = -pi/2)
+```
+```{r}
+ggplot(angles5, aes(Value, fill = AngleName, linetype = Sugar, alpha=0.5)) + geom_density() + theme_minimal()  + xlim(100,120)+ coord_polar(theta = "x", direction = -1, start = -pi/2)
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
